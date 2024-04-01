@@ -4,10 +4,7 @@
 
 @layer base {
   @font-face {
-    font-family: 'rubik';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('/public/fonts/Rubik-VariableFont_wght.ttf') format('ttf');
+    font-family: "Rubik";
+    src: url('/fonts/rubik.ttf')
   }
 }
