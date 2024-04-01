@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import { ChangeEvent, FunctionComponent } from 'react';
 import Button from '../components/button/Button';
 import Input from '../components/input/Input';
-import { validationSchema } from './singup/validation-schema';
+import { validationSchema } from '../validation-schemas/singup/validation-schema';
 
 const SignUp: FunctionComponent = () => {
   return (
