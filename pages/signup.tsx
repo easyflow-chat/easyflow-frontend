@@ -2,12 +2,14 @@ import { Form, Formik } from 'formik';
 import { ChangeEvent, FunctionComponent } from 'react';
 import Button from '../components/button/Button';
 import Input from '../components/input/Input';
-import { validationSchema } from '../validation-schemas/singup/validation-schema';
+import useUser from '../hooks/user.hook';
+import { validationSchema } from '../validation-schemas/signup/validation-schema';
 
 const SignUp: FunctionComponent = () => {
+  const { signup } = useUser();
   return (
     <div className="tw-mt-16 tw-flex tw-flex-col tw-items-center">
-      <Formik initialValues={{ email: '', password: '', confirmPassword: '' }} validationSchema={validationSchema} onSubmit={values => console.log(values)}>
+      <Formik initialValues={{ email: '', password: '', confirmPassword: '' }} validationSchema={validationSchema} onSubmit={async (values) => await signup(values.email, values.password)}>
         {({ errors, touched, values, isValid, setFieldTouched, setFieldValue }) => (
           <Form>
             <h2>Sign up</h2>
@@ -39,7 +41,9 @@ const SignUp: FunctionComponent = () => {
               onBlur={() => setFieldTouched('confirmPassword')}
               required
             />
-            <Button type="submit" disabled={!isValid} invertedStyle>Singup</Button>
+            <Button type="submit" disabled={!isValid} invertedStyle>
+              Signup
+            </Button>
           </Form>
         )}
       </Formik>
