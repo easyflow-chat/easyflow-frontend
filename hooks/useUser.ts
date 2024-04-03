@@ -7,6 +7,7 @@ import useFetch from './useFetch';
 type useUserType = {
   user: UserType | undefined;
   accessToken: string | undefined;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
 };
@@ -17,33 +18,32 @@ const useUser = (): useUserType => {
   const { fetchDataWithLoadingTimeout, isLoading } = useFetch();
   const router = useRouter();
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<void> => {
     const res = await fetchDataWithLoadingTimeout({ op: APIOperation.LOGIN, payload: { email, password } });
 
     if (!res.success) {
-      // TODO: add error messages
-      console.error('an error accured');
+      console.error(res.errorCode);
     } else {
       setAccessToken(res.data.accessToken);
       //TODO: change to the correct destination
-      router.replace('/');
+      await router.replace('/');
     }
   };
 
-  const signup = async (email: string, password: string) => {
+  const signup = async (email: string, password: string): Promise<void> => {
     const res = await fetchDataWithLoadingTimeout({ op: APIOperation.SIGNUP_USER, payload: { email, password } });
 
     if (!res.success) {
       // TODO: add error messages
-      console.error('an error accured');
+      console.error(res.errorCode);
     } else {
       setUser(res.data);
       //TODO: change to the correct destination
-      router.replace('/');
+      await router.replace('/');
     }
   };
 
-  return { user, accessToken, login, signup };
+  return { user, accessToken, isLoading, login, signup };
 };
 
 export default useUser;
