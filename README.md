@@ -4,6 +4,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+**IMPORTANT** nodemon is only working wiht node version 18.18.2  so pleasse use that
+
 ```bash
 npm run dev
 # or
