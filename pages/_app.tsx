@@ -19,7 +19,7 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element
   }, []);
 
   return (
-    <div className={`${isDarkMode ? 'tw-dark' : 'tw-light'}`}>
+    <div className={`${isDarkMode ? 'tw-dark' : 'tw-light'} tw-transition-colors tw-duration-500`}>
       <UserContext.Provider value={{ user, setUser }}>
         <div className="tw-absolute tw-left-0 tw-top-0 tw-flex tw-min-h-screen tw-min-w-full tw-flex-col tw-bg-white tw-font-rubik tw-text-black dark:tw-bg-black dark:tw-text-white">
           <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />

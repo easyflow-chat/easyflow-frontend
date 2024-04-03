@@ -4,8 +4,8 @@ enum APIOperation {
 }
 
 type APIContext = {
-  [APIOperation.SIGNUP_USER]: RequestContext<APIOperation.SIGNUP_USER, CHAT_API.Responses.SignupResponse, { email: string; password: string }>,
-  [APIOperation.LOGIN]: RequestContext<APIOperation.LOGIN, CHAT_API.Responses.LoginResponse, {email: string; password: string}>,
+  [APIOperation.SIGNUP_USER]: RequestContext<APIOperation.SIGNUP_USER, CHAT_API.Responses.SignupResponse, { email: string; password: string }>;
+  [APIOperation.LOGIN]: RequestContext<APIOperation.LOGIN, CHAT_API.Responses.LoginResponse, { email: string; password: string }>;
 };
 
 type WithPayload<TBase, TPayload> = TPayload extends void
@@ -20,17 +20,26 @@ type WithURLParams<TBase, TURLParams> = TURLParams extends void
       params: TURLParams;
     };
 
-type WithQueryParams<TBase, TQueryParams> = TQueryParams extends void
+type WithQueryParams<TBase, TQuery> = TQuery extends void
   ? TBase
   : TBase & {
-      query: TQueryParams;
+      query: TQuery;
     };
 
-type RequestContext<TEndpoints extends APIOperation, TResponse = void, TPayload = void, TURLParams = void, TQueryParams = void> = WithQueryParams<
-  WithURLParams<WithPayload<{ op: TEndpoints; responseType: TResponse; header: Record<string, string> }, TPayload>, TURLParams>,
-  TQueryParams
+type RequestContext<TEndpoint extends APIOperation, TResponse = void, TPayload = void, TURLParams = void, TQuery = void> = WithQueryParams<
+  WithURLParams<
+    WithPayload<
+      {
+        op: TEndpoint;
+        responseType: TResponse;
+        headers?: Record<string, string>;
+      },
+      TPayload
+    >,
+    TURLParams
+  >,
+  TQuery
 >;
 
 export { APIOperation };
 export type { APIContext };
-

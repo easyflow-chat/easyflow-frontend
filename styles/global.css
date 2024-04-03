@@ -4,7 +4,7 @@
 
 @layer base {
   @font-face {
-    font-family: "Rubik";
-    src: url('/fonts/rubik.ttf')
+    font-family: 'Rubik';
+    src: url('/fonts/rubik.ttf');
   }
 }
