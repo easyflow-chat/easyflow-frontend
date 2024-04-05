@@ -1,14 +1,10 @@
 import type { AppProps } from 'next/app';
-import { Dispatch, FunctionComponent, SetStateAction, createContext, useEffect, useState } from 'react';
-import Header from '../components/header/Header';
-import { emitUnboundError } from '../context/context.utils';
+import { FunctionComponent, useEffect, useState } from 'react';
+import Header from '../components/Header/Header';
+import NotificationsProvider from '../components/Notification/NotificationProvider';
+import UserContextProvider from '../context/user.context';
 import '../styles/global.css';
 import { UserType } from '../types/user.type';
-type UserContextType = {
-  user: UserType | undefined;
-  setUser: Dispatch<SetStateAction<UserType | undefined>>;
-};
-const UserContext = createContext<UserContextType>({ setUser: emitUnboundError, user: undefined });
 
 const App: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>();
@@ -20,17 +16,17 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element
 
   return (
     <div className={`${isDarkMode ? 'tw-dark' : 'tw-light'} tw-transition-colors tw-duration-500`}>
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContextProvider user={user} setUser={setUser}>
         <div className="tw-absolute tw-left-0 tw-top-0 tw-flex tw-min-h-screen tw-min-w-full tw-flex-col tw-bg-white tw-font-rubik tw-text-black dark:tw-bg-black dark:tw-text-white">
           <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-          <div className="tw-xl:tw-w-[70vw] tw-mx-auto tw-w-[calc(100%-32px)] tw-max-w-[2000px] tw-p-4">
-            <Component {...pageProps} />
-          </div>
+          <NotificationsProvider>
+            <div className="tw-xl:tw-w-[70vw] tw-mx-auto tw-w-[calc(100%-32px)] tw-max-w-[2000px] tw-p-4">
+              <Component {...pageProps} />
+            </div>
+          </NotificationsProvider>
         </div>
-      </UserContext.Provider>
+      </UserContextProvider>
     </div>
   );
 };
-
-export { UserContext };
 export default App;
