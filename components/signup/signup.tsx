@@ -1,8 +1,8 @@
 import { Form, Formik } from 'formik';
 import { ChangeEvent, FunctionComponent } from 'react';
 import useUser from '../../hooks/useUser';
-import Button from '../Button/Button';
-import Input from '../Input/Input';
+import Input from '../input/Input';
+import Button from '../button/Button';
 import { validationSchema } from './validation-schema';
 
 const SignUp: FunctionComponent = () => {

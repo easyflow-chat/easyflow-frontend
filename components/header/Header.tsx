@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Dispatch, FunctionComponent, SetStateAction, useContext } from 'react';
 import { UserContext } from '../../context/user.context';
-import Button from '../Button/Button';
-import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
+import Button from '../button/Button';
+import DarkModeToggle from '../darkModeToggle/DarkModeToggle';
 
 interface HeaderProps {
   isDarkMode: boolean | undefined;

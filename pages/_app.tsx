@@ -1,10 +1,10 @@
 import type { AppProps } from 'next/app';
 import { FunctionComponent, useEffect, useState } from 'react';
-import Header from '../components/Header/Header';
 import NotificationsProvider from '../components/Notification/NotificationProvider';
 import UserContextProvider from '../context/user.context';
 import '../styles/global.css';
 import { UserType } from '../types/user.type';
+import Header from '../components/header/Header';
 
 const App: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>();
@@ -15,7 +15,7 @@ const App: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element
   }, []);
 
   return (
-    <div className={`${isDarkMode ? 'tw-dark' : 'tw-light'} tw-transition-colors tw-duration-500`}>
+    <div className={`${isDarkMode ? 'tw-dark' : 'tw-light'} tw-transition-colors tw-duration-700`}>
       <UserContextProvider user={user} setUser={setUser}>
         <div className="tw-absolute tw-left-0 tw-top-0 tw-flex tw-min-h-screen tw-min-w-full tw-flex-col tw-bg-white tw-font-rubik tw-text-black dark:tw-bg-black dark:tw-text-white">
           <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
