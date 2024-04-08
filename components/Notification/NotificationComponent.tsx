@@ -7,7 +7,6 @@ const NotificationComponent: FunctionComponent<Notification> = ({ message, type,
   useEffect(() => {
     const timer = setTimeout(
       () => {
-        console.log('closing now');
         setIsClosing(true);
       },
       type === NotificationTypesEnum.SUCCESS ? 3000 : 5000,
@@ -21,7 +20,6 @@ const NotificationComponent: FunctionComponent<Notification> = ({ message, type,
   useEffect(() => {
     if (closing) {
       const timer = setTimeout(() => {
-        console.log('removing notification');
         removeNotification(id);
       }, 500);
 

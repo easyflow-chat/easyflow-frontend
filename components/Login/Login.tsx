@@ -1,15 +1,16 @@
 import { Form, Formik } from 'formik';
-import { ChangeEvent, FunctionComponent } from 'react';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
 import useUser from '../../hooks/useUser';
-import { validationSchema } from './validation-schema';
-import Input from '../input/Input';
 import Button from '../button/Button';
+import Input from '../input/Input';
+import { validationSchema } from './validation-schema';
 
 const Login: FunctionComponent = () => {
+  const [errorMessage, setErrorMessage] = useState<string>();
   const { login } = useUser();
   return (
     <div className="tw-mt-16 tw-flex tw-flex-col tw-items-center">
-      <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={async values => await login(values.email, values.password)}>
+      <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={async values => setErrorMessage(await login(values.email, values.password))}>
         {({ errors, touched, values, isValid, setFieldTouched, setFieldValue }) => (
           <Form>
             <h2>Login</h2>
@@ -32,6 +33,7 @@ const Login: FunctionComponent = () => {
               onBlur={() => setFieldTouched('password')}
               required
             />
+            {errorMessage && <p className="tw-text-red-500">{errorMessage}</p>}
             <Button type="submit" disabled={!isValid} invertedStyle>
               Login
             </Button>

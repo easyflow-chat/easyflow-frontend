@@ -36,7 +36,7 @@ const req = async <T extends APIOperation, R = APIContext[T]['responseType']>(en
     });
   const httpMethod = options.op.split(':', 1)[0] as 'get' | 'post' | 'put' | 'patch' | 'delete';
 
-  const headers = { ...options.headers };
+  const headers = options.headers;
 
   switch (httpMethod) {
     case 'get': {
@@ -70,7 +70,7 @@ const req = async <T extends APIOperation, R = APIContext[T]['responseType']>(en
   }
 };
 
-const serverSideRequest = async <T extends APIOperation, R = APIContext[T]['responseType']>(options: Omit<APIContext[T], 'responseType'>) => {
+const serverSideRequest = async <T extends APIOperation, R = APIContext[T]['responseType']>(options: Omit<APIContext[T], 'responseType'>): Promise<R> => {
   const { data } = await rawServerSideRequest(options);
   return data as R;
 };
@@ -78,7 +78,6 @@ const serverSideRequest = async <T extends APIOperation, R = APIContext[T]['resp
 const rawServerSideRequest = async <T extends APIOperation, R extends APIContext[T]['responseType']>(options: Omit<APIContext[T], 'responseType'>): Promise<AxiosResponse<R>> => {
   if (typeof window !== 'undefined') throw new Error('Request can only be performed Serverside');
 
-  //TODO: add token when it is ready
   return req(AppConfiguration.get('REMOTE_URL'), options);
 };
 
