@@ -8,12 +8,13 @@ const clientSideRequest = async <T extends APIOperation, R = APIContext[T]['resp
   if (typeof window === 'undefined') throw new Error('Request can only be performed on the client side');
 
   try {
-    const { data } = await axios.post<R>('/api', {
-      ...options,
-      headers: {
-        ...options.headers,
+    const { data } = await axios.post<R>(
+      '/api',
+      {
+        ...options,
       },
-    });
+      { withCredentials: true },
+    );
 
     return { success: true, data };
   } catch (err) {

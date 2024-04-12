@@ -1,7 +1,9 @@
-import { object, string } from 'yup';
+import { boolean, object, string } from 'yup';
 
 type EnviromentConfiguration = {
   REMOTE_URL: string;
+  USE_PROXY: boolean;
+  BASE_URL: string;
 };
 
 class AppConfiguration {
@@ -20,6 +22,8 @@ class AppConfiguration {
     const envConfiguration = object()
       .shape({
         REMOTE_URL: string().required(),
+        USE_PROXY: boolean().required(),
+        BASE_URL: string().required(),
       })
       .validateSync(process.env, {
         stripUnknown: true,

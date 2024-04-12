@@ -26,7 +26,7 @@ const Input: FunctionComponent<InputProps> = ({ label, errors, required, type, .
           <img
             src={`/images/password-${showPass ? 'hide' : 'show'}.svg`}
             alt="show/hide"
-            className="tw-absolute tw-bottom-2.5 tw-right-1 tw-rounded-md hover:tw-cursor-pointer dark:tw-invert"
+            className="tw-absolute tw-bottom-2.5 tw-right-1 tw-rounded-md xl:hover:tw-cursor-pointer dark:tw-invert"
             onClick={() => setShowPass(!showPass)}
           />
         )}

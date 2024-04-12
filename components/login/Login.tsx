@@ -10,7 +10,11 @@ const Login: FunctionComponent = () => {
   const { login } = useUser();
   return (
     <div className="tw-mt-16 tw-flex tw-flex-col tw-items-center">
-      <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={async values => setErrorMessage(await login(values.email, values.password))}>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={async values => setErrorMessage(await login(values.email, values.password))}
+      >
         {({ errors, touched, values, isValid, setFieldTouched, setFieldValue }) => (
           <Form>
             <h2>Login</h2>

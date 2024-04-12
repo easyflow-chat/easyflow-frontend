@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
-import { useNotifications } from '../components/Notification/NotificationProvider';
+import { useNotifications } from '../components/notification/NotificationProvider';
 import { UserContext } from '../context/user.context';
 import { ErrorCodes } from '../enums/tc-api.enum';
 import { APIOperation } from '../services/api-services/common';
@@ -9,14 +9,13 @@ import useFetch from './useFetch';
 
 type useUserType = {
   user: UserType | undefined;
-  accessToken: string | undefined;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<string | undefined>;
   signup: (email: string, password: string) => Promise<string | undefined>;
 };
 
 const useUser = (): useUserType => {
-  const { user, setUser, accessToken, setAccessToken } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { fetchDataWithLoadingTimeout, isLoading } = useFetch();
   const { addFailureNotification, addSuccessNotification } = useNotifications();
   const router = useRouter();
@@ -28,12 +27,19 @@ const useUser = (): useUserType => {
       if (res.errorCode === ErrorCodes.API_ERROR) {
         addFailureNotification('An error occurred. Please try again later');
       }
-      return res.errorCode === ErrorCodes.WRONG_CREDENTIALS ? "Email or password don't match" : 'An error occurred. Please try again later';
+      return res.errorCode === ErrorCodes.WRONG_CREDENTIALS
+        ? "Email or password don't match"
+        : 'An error occurred. Please try again later';
     } else {
-      setAccessToken(res.data.accessToken);
+      const userRes = await fetchDataWithLoadingTimeout({ op: APIOperation.GET_USER });
+      if (!userRes.success) {
+        addFailureNotification('An error occurred. Please try again later');
+      } else {
+        setUser(userRes.data);
+        addSuccessNotification('Login successful');
+      }
       //TODO: change to the correct destination
       await router.replace('/');
-      addSuccessNotification('Login successful');
     }
   };
 
@@ -44,16 +50,17 @@ const useUser = (): useUserType => {
       if (res.errorCode === ErrorCodes.API_ERROR) {
         addFailureNotification('An error occurred. Please try again later');
       }
-      return res.errorCode === ErrorCodes.ALREADY_EXISTS ? 'Email already exists' : 'An error occurred. Please try again later';
+      return res.errorCode === ErrorCodes.ALREADY_EXISTS
+        ? 'Email already exists'
+        : 'An error occurred. Please try again later';
     } else {
       setUser(res.data);
-      //TODO: change to the correct destination
-      await router.replace('/');
+      await router.replace('/login');
       addSuccessNotification('Signup successful');
     }
   };
 
-  return { user, accessToken, isLoading, login, signup };
+  return { user, isLoading, login, signup };
 };
 
 export default useUser;

@@ -9,6 +9,7 @@ declare global {
     export namespace Responses {
       type SignupResponse = UserType;
       type LoginResponse = { accessToken: string };
+      type GetUserResponse = UserType;
     }
   }
 }

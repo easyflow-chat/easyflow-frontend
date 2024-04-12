@@ -1,11 +1,21 @@
 enum APIOperation {
   SIGNUP_USER = 'post:users/signup',
   LOGIN = 'post:auth/login',
+  GET_USER = 'get:users',
 }
 
 type APIContext = {
-  [APIOperation.SIGNUP_USER]: RequestContext<APIOperation.SIGNUP_USER, CHAT_API.Responses.SignupResponse, { email: string; password: string }>;
-  [APIOperation.LOGIN]: RequestContext<APIOperation.LOGIN, CHAT_API.Responses.LoginResponse, { email: string; password: string }>;
+  [APIOperation.SIGNUP_USER]: RequestContext<
+    APIOperation.SIGNUP_USER,
+    CHAT_API.Responses.SignupResponse,
+    { email: string; password: string }
+  >;
+  [APIOperation.LOGIN]: RequestContext<
+    APIOperation.LOGIN,
+    CHAT_API.Responses.LoginResponse,
+    { email: string; password: string }
+  >;
+  [APIOperation.GET_USER]: RequestContext<APIOperation.GET_USER, CHAT_API.Responses.GetUserResponse>;
 };
 
 type WithPayload<TBase, TPayload> = TPayload extends void
@@ -26,7 +36,13 @@ type WithQueryParams<TBase, TQuery> = TQuery extends void
       query: TQuery;
     };
 
-type RequestContext<TEndpoint extends APIOperation, TResponse = void, TPayload = void, TURLParams = void, TQuery = void> = WithQueryParams<
+type RequestContext<
+  TEndpoint extends APIOperation,
+  TResponse = void,
+  TPayload = void,
+  TURLParams = void,
+  TQuery = void,
+> = WithQueryParams<
   WithURLParams<
     WithPayload<
       {
