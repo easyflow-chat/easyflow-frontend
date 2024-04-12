@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import next from 'next';
 
@@ -12,6 +13,9 @@ const bootstrap = async (): Promise<void> => {
 
   // Setup express
   const server = express();
+  server.use(cookieParser());
+
+  // NextJS
   server.use((req, res) => handler(req, res));
 
   // Start the server

@@ -24,7 +24,7 @@ const useFetch = (loadingTimeout = 100): useFetchType => {
 
   useEffect(() => {
     return () => clearInterval(timeout);
-  }, []);
+  });
 
   const fetchDataWithLoadingTimeout = async <T extends APIOperation, R = APIContext[T]['responseType']>(
     config: Omit<APIContext[T], 'responseType'> & { op: T },

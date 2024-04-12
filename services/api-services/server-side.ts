@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { IncomingMessage } from 'http';
 import AppConfiguration from '../../config/app.config';
 import { APIContext, APIOperation } from './common';
 
@@ -26,42 +27,75 @@ const replaceURLParams = (endpoint: string, params: Record<string, string | numb
   return res;
 };
 
-const req = async <T extends APIOperation, R = APIContext[T]['responseType']>(endpointPrefix: string, options: Omit<APIContext[T], 'responseType'>): Promise<AxiosResponse<R>> => {
+const req = async <T extends APIOperation, R = APIContext[T]['responseType']>(
+  endpointPrefix: string,
+  request: IncomingMessage,
+  options: Omit<APIContext[T], 'responseType'>,
+): Promise<AxiosResponse<R>> => {
   if (!Object.values(APIOperation).includes(options.op)) throw new Error(`Invalid operation: ${options.op}`);
 
   const endpoint =
     endpointPrefix +
-    stringifyQueryValues(replaceURLParams(options.op.replace(/^[^:]+:/, ''), (options as unknown as { params: Record<string, string | number> }).params), {
-      ...(options as unknown as { query: Record<string, string[]> }).query,
-    });
+    stringifyQueryValues(
+      replaceURLParams(
+        options.op.replace(/^[^:]+:/, ''),
+        (options as unknown as { params: Record<string, string | number> }).params,
+      ),
+      {
+        ...(options as unknown as { query: Record<string, string[]> }).query,
+      },
+    );
   const httpMethod = options.op.split(':', 1)[0] as 'get' | 'post' | 'put' | 'patch' | 'delete';
 
-  const headers = { ...options.headers };
+  const headers = options.headers;
+
+  const cookies = request.headers.cookie ?? '';
 
   switch (httpMethod) {
     case 'get': {
       return axios.get<R>(endpoint, {
-        headers,
+        headers: {
+          ...headers,
+          cookie: cookies,
+        },
+
+        withCredentials: true,
       });
     }
     case 'post': {
       return axios.post<R>(endpoint, (options as unknown as { payload: unknown }).payload, {
-        headers,
+        headers: {
+          ...headers,
+          cookie: cookies,
+        },
+        withCredentials: true,
       });
     }
     case 'put': {
       return axios.put<R>(endpoint, (options as unknown as { payload: unknown }).payload, {
-        headers,
+        headers: {
+          ...headers,
+          cookie: cookies,
+        },
+        withCredentials: true,
       });
     }
     case 'patch': {
       return axios.patch<R>(endpoint, (options as unknown as { payload: unknown }).payload, {
-        headers,
+        headers: {
+          ...headers,
+          cookie: cookies,
+        },
+        withCredentials: true,
       });
     }
     case 'delete': {
       return axios.delete<R>(endpoint, {
-        headers,
+        headers: {
+          ...headers,
+          cookie: cookies,
+        },
+        withCredentials: true,
       });
     }
     default: {
@@ -70,16 +104,21 @@ const req = async <T extends APIOperation, R = APIContext[T]['responseType']>(en
   }
 };
 
-const serverSideRequest = async <T extends APIOperation, R = APIContext[T]['responseType']>(options: Omit<APIContext[T], 'responseType'>) => {
-  const { data } = await rawServerSideRequest(options);
-  return data as R;
+const serverSideRequest = async <T extends APIOperation, R = APIContext[T]['responseType']>(
+  request: IncomingMessage,
+  options: Omit<APIContext[T], 'responseType'>,
+): Promise<AxiosResponse<R>> => {
+  const res = await rawServerSideRequest(request, options);
+  return res as AxiosResponse<R>;
 };
 
-const rawServerSideRequest = async <T extends APIOperation, R extends APIContext[T]['responseType']>(options: Omit<APIContext[T], 'responseType'>): Promise<AxiosResponse<R>> => {
+const rawServerSideRequest = async <T extends APIOperation, R extends APIContext[T]['responseType']>(
+  request: IncomingMessage,
+  options: Omit<APIContext[T], 'responseType'>,
+): Promise<AxiosResponse<R>> => {
   if (typeof window !== 'undefined') throw new Error('Request can only be performed Serverside');
 
-  //TODO: add token when it is ready
-  return req(AppConfiguration.get('REMOTE_URL'), options);
+  return req(AppConfiguration.get('REMOTE_URL'), request, options);
 };
 
 export { serverSideRequest };

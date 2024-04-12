@@ -1,0 +1,51 @@
+import { Form, Formik } from 'formik';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
+import useUser from '../../hooks/useUser';
+import Button from '../button/Button';
+import Input from '../input/Input';
+import { validationSchema } from './validation-schema';
+
+const Login: FunctionComponent = () => {
+  const [errorMessage, setErrorMessage] = useState<string>();
+  const { login } = useUser();
+  return (
+    <div className="tw-mt-16 tw-flex tw-flex-col tw-items-center">
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={async values => setErrorMessage(await login(values.email, values.password))}
+      >
+        {({ errors, touched, values, isValid, setFieldTouched, setFieldValue }) => (
+          <Form>
+            <h2>Login</h2>
+            <Input
+              label="E-Mail"
+              placeholder="example@example.com"
+              type="text"
+              value={values.email}
+              errors={touched.email && errors.email ? errors.email : undefined}
+              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
+              onBlur={() => setFieldTouched('email')}
+              required
+            />
+            <Input
+              label="Password"
+              type="password"
+              value={values.password}
+              errors={touched.password && errors.password ? errors.password : undefined}
+              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('password', e.currentTarget.value)}
+              onBlur={() => setFieldTouched('password')}
+              required
+            />
+            {errorMessage && <p className="tw-text-red-500">{errorMessage}</p>}
+            <Button type="submit" disabled={!isValid} invertedStyle>
+              Login
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+};
+
+export default Login;

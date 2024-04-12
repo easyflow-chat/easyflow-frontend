@@ -17,14 +17,17 @@ const routerHandler = router.handler({
 
 router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const response = await serverSideRequest(req.body);
-    res.status(200).send(response);
+    const response = await serverSideRequest(req, req.body);
+    res.setHeader('Set-Cookie', response.headers['set-cookie'] ? response.headers['set-cookie'] : []);
+    res.status(200).send(response.data);
   } catch (err) {
     if (!(err instanceof AxiosError)) throw err;
     const msg = {
       request: {
         url: err.config?.url,
         body: err.request.body,
+        requestCookies: err.request.cookies,
+        responseCookies: err.response?.headers['set-cookie'],
       },
       status: err.response?.status,
       statusText: err.response?.statusText,
