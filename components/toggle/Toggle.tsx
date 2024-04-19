@@ -5,7 +5,7 @@ interface DarkModeToggleProps {
   setIsDarkMode: (value: SetStateAction<boolean | undefined>) => void;
 }
 
-const DarkModeToggle: FunctionComponent<DarkModeToggleProps> = ({ isDarkMode, setIsDarkMode }): JSX.Element => {
+const Toggle: FunctionComponent<DarkModeToggleProps> = ({ isDarkMode, setIsDarkMode }): JSX.Element => {
   return (
     <label className="tw-mx-3 tw-my-auto tw-flex tw-h-[34px] tw-w-[60px] tw-items-center tw-rounded-full tw-bg-black xl:hover:tw-cursor-pointer dark:tw-bg-white">
       <input type="checkbox" className="tw-hidden" onClick={() => setIsDarkMode(!isDarkMode)} />
@@ -16,4 +16,4 @@ const DarkModeToggle: FunctionComponent<DarkModeToggleProps> = ({ isDarkMode, se
   );
 };
 
-export default DarkModeToggle;
+export default Toggle;

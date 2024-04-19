@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import next from 'next';
 const port = parseInt(process.env.PORT || '3000', 10);
@@ -9,6 +10,8 @@ const bootstrap = async () => {
     await app.prepare();
     // Setup express
     const server = express();
+    server.use(cookieParser());
+    // NextJS
     server.use((req, res) => handler(req, res));
     // Start the server
     server.listen(port, () => {

@@ -1,0 +1,9 @@
+{
+  "buttons": {
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "home": "Startseite"
+  },
+  "message": "Ups sieht aus als wärst du nich angemeldet oder hast keine Berechtigung diese Seite zu sehen.",
+  "title": "Keine Berechtigung"
+}

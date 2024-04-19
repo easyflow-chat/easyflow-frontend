@@ -1,7 +1,7 @@
 import { FunctionComponent, HTMLInputTypeAttribute, InputHTMLAttributes, useState } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   type: HTMLInputTypeAttribute;
   errors?: string;
   required?: boolean;
@@ -11,10 +11,12 @@ const Input: FunctionComponent<InputProps> = ({ label, errors, required, type, .
   const [showPass, setShowPass] = useState<boolean>(false);
   return (
     <div className="tw-my-5">
-      <p className={`tw-m-0 tw-mb-1 tw-text-sm tw-text-gray-400 ${errors && 'tw-text-red-500'}`}>
-        {required && '*'}
-        {label}
-      </p>
+      {label && (
+        <p className={`tw-m-0 tw-mb-1 tw-text-sm tw-text-gray-400 ${errors && 'tw-text-red-500'}`}>
+          {required && '*'}
+          {label}
+        </p>
+      )}
       <div className="tw-relative">
         <input
           {...props}

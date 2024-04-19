@@ -1,5 +1,5 @@
 {
-  "watch": ["server"],
   "exec": "tsc && node dist/server/index.js",
-  "ext": "js ts mts jsx tsx"
+  "ext": "js ts mjs cjs cts mts jsx tsx",
+  "watch": ["server"]
 }

@@ -1,0 +1,9 @@
+{
+  "buttons": {
+    "login": "Login",
+    "signup": "Signup",
+    "home": "Home"
+  },
+  "message": "Ups looks like you aren't logged in or don't have the right permissions to view this page.",
+  "title": "Unauthorized"
+}

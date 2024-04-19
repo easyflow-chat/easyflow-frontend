@@ -1,0 +1,11 @@
+{
+  "email": "E-Mail",
+  "errors": {
+    "credentials": "Invalid credentials!",
+    "invalidEmail": "Must be a valid email address!",
+    "notEmpty": "Cannot be empty!"
+  },
+  "login": "Login",
+  "password": "Password",
+  "success": "Login successful!"
+}

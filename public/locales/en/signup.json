@@ -1,0 +1,17 @@
+{
+  "confirmPassword": "Confirm Password",
+  "email": "E-Mail",
+  "errors": {
+    "invalidEmail": "Must be a valid email address!",
+    "notEmpty": "Cannot be empty!",
+    "short": "Must at least be 8 characters long!",
+    "lowerCaseCharacter": "Must contain at least one lowercase character (a-z)!",
+    "upperCaseCharacter": "Must contain at least one uppercase character (A-Z)!",
+    "digit": "Must contain at least one digit (0-9)!",
+    "passwordsNotEqual": "Paasswords do not match!",
+    "emailExists": "E-Mail already exists!"
+  },
+  "password": "Password",
+  "signup": "Signup",
+  "success": "Signup successful!"
+}

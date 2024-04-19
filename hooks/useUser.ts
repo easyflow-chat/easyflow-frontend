@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { useNotifications } from '../components/notification/NotificationProvider';
@@ -15,6 +16,7 @@ type useUserType = {
 };
 
 const useUser = (): useUserType => {
+  const { t } = useTranslation();
   const { user, setUser } = useContext(UserContext);
   const { fetchDataWithLoadingTimeout, isLoading } = useFetch();
   const { addFailureNotification, addSuccessNotification } = useNotifications();
@@ -25,21 +27,18 @@ const useUser = (): useUserType => {
 
     if (!res.success) {
       if (res.errorCode === ErrorCodes.API_ERROR) {
-        addFailureNotification('An error occurred. Please try again later');
+        addFailureNotification(t('errors.server'));
       }
-      return res.errorCode === ErrorCodes.WRONG_CREDENTIALS
-        ? "Email or password don't match"
-        : 'An error occurred. Please try again later';
+      return res.errorCode === ErrorCodes.WRONG_CREDENTIALS ? t('login:errors.credentials') : t('errors.server');
     } else {
       const userRes = await fetchDataWithLoadingTimeout({ op: APIOperation.GET_USER });
       if (!userRes.success) {
-        addFailureNotification('An error occurred. Please try again later');
+        addFailureNotification(t('errors.server'));
       } else {
         setUser(userRes.data);
-        addSuccessNotification('Login successful');
+        addSuccessNotification(t('login:success'));
+        await router.replace(`/chat/${userRes.data.id}`);
       }
-      //TODO: change to the correct destination
-      await router.replace('/');
     }
   };
 
@@ -48,15 +47,13 @@ const useUser = (): useUserType => {
 
     if (!res.success) {
       if (res.errorCode === ErrorCodes.API_ERROR) {
-        addFailureNotification('An error occurred. Please try again later');
+        addFailureNotification(t('errors.server'));
       }
-      return res.errorCode === ErrorCodes.ALREADY_EXISTS
-        ? 'Email already exists'
-        : 'An error occurred. Please try again later';
+      return res.errorCode === ErrorCodes.ALREADY_EXISTS ? t('signup:errors.emailExists') : t('errors.server');
     } else {
       setUser(res.data);
       await router.replace('/login');
-      addSuccessNotification('Signup successful');
+      addSuccessNotification(t('signup:success'));
     }
   };
 
