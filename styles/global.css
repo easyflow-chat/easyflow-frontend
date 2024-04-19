@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  margin: 0;
+}
 @layer base {
   @font-face {
     font-family: 'Rubik';

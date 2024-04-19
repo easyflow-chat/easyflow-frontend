@@ -1,0 +1,11 @@
+{
+  "email": "E-Mail",
+  "errors": {
+    "invalidEmail": "Muss eine gültige E-Mail-Adresse sein!",
+    "notEmpty": "Darf nicht leer sein!",
+    "credentials": "Ungültige Anmeldeinformationen!"
+  },
+  "login": "Anmelden",
+  "password": "Passwort",
+  "success": "Erfolgreich angemeldet!"
+}

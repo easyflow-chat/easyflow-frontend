@@ -1,6 +1,14 @@
-import { object, string } from 'yup';
+import { TFunction } from 'next-i18next';
+import { ObjectSchema, object, string } from 'yup';
 
-export const validationSchema = object().shape({
-  email: string().email('Must be a valid email!').required('Cannot be empty!'),
-  password: string().required('Cannot be empty!'),
-});
+export const validationSchema = (
+  t: TFunction,
+): ObjectSchema<{
+  email: string;
+  password: string;
+}> => {
+  return object().shape({
+    email: string().email(t('login:errors.invalidEmail')).required(t('login:errors.notEmpty')),
+    password: string().required(t('login:errors.notEmpty')),
+  });
+};

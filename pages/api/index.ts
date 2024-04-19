@@ -26,8 +26,6 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
       request: {
         url: err.config?.url,
         body: err.request.body,
-        requestCookies: err.request.cookies,
-        responseCookies: err.response?.headers['set-cookie'],
       },
       status: err.response?.status,
       statusText: err.response?.statusText,

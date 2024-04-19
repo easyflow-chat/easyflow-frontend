@@ -1,7 +1,7 @@
 enum APIOperation {
-  SIGNUP_USER = 'post:users/signup',
+  SIGNUP_USER = 'post:user/signup',
   LOGIN = 'post:auth/login',
-  GET_USER = 'get:users',
+  GET_USER = 'get:user',
 }
 
 type APIContext = {
