@@ -1,4 +1,9 @@
 {
+  "cookies": {
+    "title": "Wir benutzen Cookies!",
+    "message": "Wir benutzen Cookies um deine preferänzen zu speichern und ein Optimales Nutzererlebnis zu gewährleisten",
+    "acknowledge": "Akzeptieren"
+  },
   "errors": {
     "server": "Ein Fehler ist aufgetreten! Bitte versuchen Sie es später erneut."
   }

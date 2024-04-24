@@ -1,12 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  safelist: [
-    'tw-dark',
-    'tw-animate-toggle',
-    'tw-h-fit',
-    ...[...Array(100).keys()].flatMap(i => [`tw-h-${i}`, `tw-w-${i}`]),
-  ],
+  safelist: ['tw-dark', 'tw-h-fit', ...[...Array(100).keys()].flatMap(i => [`tw-h-${i}`, `tw-w-${i}`])],
   darkMode: ['selector'],
   corePlugins: {
     preflight: false,
@@ -37,6 +32,7 @@ const config: Config = {
       },
       transitionProperty: {
         'max-height': 'max-height',
+        width: 'width',
       },
     },
   },

@@ -1,4 +1,9 @@
 {
+  "cookies": {
+    "title": "We're using Cookies!",
+    "message": "We use cookies to save your preferences and ensure an optimal user experience",
+    "acknowledge": "Acknowledge"
+  },
   "errors": {
     "server": "An error occurred! Please try again later."
   }

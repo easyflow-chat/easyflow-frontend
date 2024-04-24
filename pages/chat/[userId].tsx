@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { FunctionComponent, useContext, useEffect } from 'react';
-import { UserContext } from '../../context/user.context';
+import { GlobalContext } from '../../context/gloabl.context';
 import { APIOperation } from '../../services/api-services/common';
 import { serverSideRequest } from '../../services/api-services/server-side';
 import { UserType } from '../../types/user.type';
@@ -10,7 +10,7 @@ interface ChatType {
 }
 
 const Chat: FunctionComponent<ChatType> = ({ propUser }): JSX.Element => {
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(GlobalContext);
 
   useEffect(() => {
     if (propUser) {
