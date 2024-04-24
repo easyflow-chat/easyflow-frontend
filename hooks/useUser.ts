@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { useNotifications } from '../components/notification/NotificationProvider';
-import { UserContext } from '../context/user.context';
+import { GlobalContext } from '../context/gloabl.context';
 import { ErrorCodes } from '../enums/tc-api.enum';
 import { APIOperation } from '../services/api-services/common';
 import { UserType } from '../types/user.type';
@@ -17,7 +17,7 @@ type useUserType = {
 
 const useUser = (): useUserType => {
   const { t } = useTranslation();
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(GlobalContext);
   const { fetchDataWithLoadingTimeout, isLoading } = useFetch();
   const { addFailureNotification, addSuccessNotification } = useNotifications();
   const router = useRouter();

@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-import { platform } from 'os';
-
 // https://securityheaders.com
 const ContentSecurityPolicy = `
     default-src 'self';
