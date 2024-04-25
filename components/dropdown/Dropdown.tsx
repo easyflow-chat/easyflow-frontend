@@ -1,5 +1,7 @@
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import useDetectOutsideClick from '../../hooks/useDetectOutsideClick';
+import downArrow from '../../public/images/down-arrow.svg';
+import Image from 'next/image';
 
 interface DropdownProps {
   value?: string;
@@ -26,8 +28,8 @@ const Dropdown: FunctionComponent<DropdownProps> = ({ value, options, onChange }
         onClick={() => setIsOpen(val => !val)}
       >
         {selected}
-        <img
-          src="/images/down-arrow.svg"
+        <Image
+          src={downArrow}
           alt="Down arrow"
           className="tw-m-1 tw-h-4 tw-w-4 tw-origin-center tw-transition-transform tw-duration-300 group-[.open]/dropdown:tw-rotate-180 dark:tw-invert"
         />

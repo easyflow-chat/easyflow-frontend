@@ -1,5 +1,7 @@
+import Image from 'next/image';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { NotificationTypesEnum } from '../../enums/notificationTypes.enum';
+import closeCross from '../../public/images/close-cross.svg';
 import { Notification } from '../../types/notification.types';
 
 const NotificationComponent: FunctionComponent<Notification> = ({ message, type, id, removeNotification }) => {
@@ -38,10 +40,10 @@ const NotificationComponent: FunctionComponent<Notification> = ({ message, type,
         >
           {message}
         </p>
-        <img
+        <Image
           className="tw-absolute tw-right-2 tw-top-2 tw-h-3 tw-w-3 xl:hover:tw-cursor-pointer dark:tw-invert"
           alt="closing cross"
-          src="/images/close-cross.svg"
+          src={closeCross}
           onClick={() => {
             setIsClosing(true);
           }}
