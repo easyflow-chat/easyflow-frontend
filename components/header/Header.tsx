@@ -4,7 +4,7 @@ import { Dispatch, FunctionComponent, SetStateAction, useContext, useRef, useSta
 import NEXT_I18NEXT_CONFIG from '../../config/i18n.config';
 import { GlobalContext } from '../../context/gloabl.context';
 import useDetectOutsideClick from '../../hooks/useDetectOutsideClick';
-import Button from '../Button/Button';
+import Button from '../button/Button';
 import Dropdown from '../dropdown/Dropdown';
 import Toggle from '../toggle/Toggle';
 

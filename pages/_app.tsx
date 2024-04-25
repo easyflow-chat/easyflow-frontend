@@ -1,8 +1,8 @@
 import { appWithTranslation, useTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { FunctionComponent, useEffect, useState } from 'react';
-import Button from '../components/Button/Button';
-import Header from '../components/Header/Header';
+import Header from '../components/header/Header';
+import Button from '../components/button/Button';
 import LoadingSpinner from '../components/loadingSpinner/LoadingSpinner';
 import NotificationsProvider from '../components/notification/NotificationProvider';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';

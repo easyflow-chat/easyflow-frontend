@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 import { FunctionComponent } from 'react';
-import Button from '../components/Button/Button';
+import Button from '../components/button/Button';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
 import { I18nNamespace } from '../enums/i18n.enum';
 

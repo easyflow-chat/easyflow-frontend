@@ -2,8 +2,8 @@ import { Form, Formik } from 'formik';
 import { useTranslation } from 'next-i18next';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import useUser from '../../hooks/useUser';
-import Button from '../Button/Button';
-import Input from '../Input/Input';
+import Button from '../button/Button';
+import Input from '../input/Input';
 import { validationSchema } from './validation-schema';
 
 const SignUp: FunctionComponent = () => {
