@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+import i18n from './next-18next.config.mjs';
 
 // https://securityheaders.com
 const ContentSecurityPolicy = `
@@ -62,11 +63,7 @@ const nextConfig = {
       },
     ];
   },
-  i18n: {
-    defaultLocale: 'placeholder',
-    locales: ['en', 'de', 'placeholder'],
-    localeDetection: false,
-  },
+  i18n,
 };
 
 export default nextConfig;
