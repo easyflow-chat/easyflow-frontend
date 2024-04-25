@@ -2,8 +2,8 @@ import { Form, Formik } from 'formik';
 import { useTranslation } from 'next-i18next';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import useUser from '../../hooks/useUser';
-import Button from '../button/Button';
-import Input from '../input/Input';
+import Button from '../Button/Button';
+import Input from '../Input/Input';
 import { validationSchema } from './validation-schema';
 
 const SignUp: FunctionComponent = () => {
@@ -41,7 +41,7 @@ const SignUp: FunctionComponent = () => {
             />
             <Input
               label={t('signup:confirmPassword')}
-              type="email"
+              type="password"
               value={values.confirmPassword}
               errors={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
               onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('confirmPassword', e.currentTarget.value)}
