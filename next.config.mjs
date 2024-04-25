@@ -48,25 +48,25 @@ const securityHeaders = [
   },
 ];
 
-const reactStrictMode = true;
-
-const headers = async () => {
-  return [
-    {
-      source: '/',
-      headers: securityHeaders,
-    },
-    {
-      source: '/:path*',
-      headers: securityHeaders,
-    },
-  ];
+const nextConfig = {
+  reactStrictMode: true,
+  headers: async () => {
+    return [
+      {
+        source: '/',
+        headers: securityHeaders,
+      },
+      {
+        source: '/:path*',
+        headers: securityHeaders,
+      },
+    ];
+  },
+  i18n: {
+    defaultLocale: 'placeholder',
+    locales: ['en', 'de', 'placeholder'],
+    localeDetection: false,
+  },
 };
 
-const i18n = {
-  defaultLocale: 'placeholder',
-  locales: ['en', 'de', 'placeholder'],
-  localeDetection: false,
-};
-
-export { headers, i18n, reactStrictMode };
+export default nextConfig;
