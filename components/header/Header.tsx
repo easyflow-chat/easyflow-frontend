@@ -1,9 +1,11 @@
 import { setCookie } from 'cookies-next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Dispatch, FunctionComponent, SetStateAction, useContext, useRef, useState } from 'react';
 import NEXT_I18NEXT_CONFIG from '../../config/i18n.config';
 import { GlobalContext } from '../../context/gloabl.context';
 import useDetectOutsideClick from '../../hooks/useDetectOutsideClick';
+import downArrow from '../../public/images/down-arrow.svg';
 import Button from '../button/Button';
 import Dropdown from '../dropdown/Dropdown';
 import Toggle from '../toggle/Toggle';
@@ -21,7 +23,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
   const router = useRouter();
   return (
     <header className="tw-sticky tw-top-0 tw-z-50 tw-flex tw-h-20 tw-w-full tw-items-center tw-justify-between tw-border tw-border-x-0 tw-border-t-0 tw-border-solid tw-border-gray-200 tw-bg-white/20 tw-backdrop-blur-xl dark:tw-border-gray-800 dark:tw-bg-black/20">
-      <img src="/images/logo.png" alt="logo" className="tw-m-4" />
+      <p>logo here</p>
       <div className="tw-hidden tw-items-center xl:tw-flex">
         <Toggle isValue={isDarkMode} setValue={setIsDarkMode} />
         <Dropdown
@@ -53,7 +55,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
             type="checkbox"
             className="tw-peer/hamburger tw-hidden"
             checked={isOpen}
-            onClick={() => setIsOpen(val => !val)}
+            onChange={() => setIsOpen(val => !val)}
           />
           <span className="tw-m-1 tw-h-1 tw-w-[34px] tw-origin-right tw-rounded-full tw-bg-black tw-transition-transform tw-duration-300 peer-checked/hamburger:tw--rotate-45 dark:tw-bg-white" />
           <span className="tw-m-1 tw-h-1 tw-w-[34px] tw-rounded-full tw-bg-black tw-transition-opacity tw-duration-300 peer-checked/hamburger:tw-opacity-0 dark:tw-bg-white" />
@@ -73,8 +75,8 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                   <p className="tw-my-3 tw-text-2xl tw-font-bold tw-text-inherit tw-no-underline group-hover/login:tw-underline">
                     Login
                   </p>
-                  <img
-                    src="/images/down-arrow.svg"
+                  <Image
+                    src={downArrow}
                     alt="Down arrow"
                     className="tw-ml-2 tw-h-4 tw-w-4 tw-origin-center tw-rotate-[270deg] tw-transition-transform tw-duration-300 group-hover/login:tw-translate-x-1 dark:tw-invert"
                   />
@@ -87,8 +89,8 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                   }}
                 >
                   <p className="tw-my-3 tw-text-2xl tw-font-bold group-hover/login:tw-underline">Signup</p>
-                  <img
-                    src="/images/down-arrow.svg"
+                  <Image
+                    src={downArrow}
                     alt="Down arrow"
                     className="tw-ml-2 tw-h-4 tw-w-4 tw-origin-center tw-rotate-[270deg] tw-transition-transform tw-duration-300 group-hover/login:tw-translate-x-1 dark:tw-invert"
                   />
@@ -111,7 +113,6 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                 onChange={val => router.replace(router.asPath, router.asPath, { locale: val.toLowerCase() })}
               />
             </div>
-            ;
           </div>
         </div>
       </div>
