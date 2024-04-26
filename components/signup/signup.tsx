@@ -41,7 +41,7 @@ const SignUp: FunctionComponent = () => {
             />
             <Input
               label={t('signup:confirmPassword')}
-              type="email"
+              type="password"
               value={values.confirmPassword}
               errors={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
               onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('confirmPassword', e.currentTarget.value)}

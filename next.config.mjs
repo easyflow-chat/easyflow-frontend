@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import path from 'path';
+import i18n from './next-18next.config.mjs';
 
 // https://securityheaders.com
 const ContentSecurityPolicy = `
@@ -48,25 +50,22 @@ const securityHeaders = [
   },
 ];
 
-const reactStrictMode = true;
-
-const headers = async () => {
-  return [
-    {
-      source: '/',
-      headers: securityHeaders,
-    },
-    {
-      source: '/:path*',
-      headers: securityHeaders,
-    },
-  ];
+const nextConfig = {
+  reactStrictMode: true,
+  headers: async () => {
+    return [
+      {
+        source: '/',
+        headers: securityHeaders,
+      },
+      {
+        source: '/:path*',
+        headers: securityHeaders,
+      },
+    ];
+  },
+  i18n,
+  output: 'standalone'
 };
 
-const i18n = {
-  defaultLocale: 'placeholder',
-  locales: ['en', 'de', 'placeholder'],
-  localeDetection: false,
-};
-
-export { headers, i18n, reactStrictMode };
+export default nextConfig;

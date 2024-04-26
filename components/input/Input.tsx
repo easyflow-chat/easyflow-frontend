@@ -1,4 +1,7 @@
+import Image from 'next/image';
 import { FunctionComponent, HTMLInputTypeAttribute, InputHTMLAttributes, useState } from 'react';
+import hide from '../../public/images/password-hide.svg';
+import show from '../../public/images/password-show.svg';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -25,10 +28,10 @@ const Input: FunctionComponent<InputProps> = ({ label, errors, required, type, .
           required={required}
         />
         {type === 'password' && (
-          <img
-            src={`/images/password-${showPass ? 'hide' : 'show'}.svg`}
+          <Image
+            src={showPass ? hide : show}
             alt="show/hide"
-            className="tw-absolute tw-bottom-2.5 tw-right-1 tw-rounded-md xl:hover:tw-cursor-pointer dark:tw-invert"
+            className="tw-absolute tw-bottom-2 tw-right-1 tw-rounded-md xl:hover:tw-cursor-pointer dark:tw-invert"
             onClick={() => setShowPass(!showPass)}
           />
         )}

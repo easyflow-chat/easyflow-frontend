@@ -7,6 +7,7 @@ import LoadingSpinner from '../components/loadingSpinner/LoadingSpinner';
 import NotificationsProvider from '../components/notification/NotificationProvider';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
 import GlobalContextProvider from '../context/gloabl.context';
+import { I18nNamespace } from '../enums/i18n.enum';
 import useFetch from '../hooks/useFetch';
 import { APIOperation } from '../services/api-services/common';
 import '../styles/global.css';
@@ -16,8 +17,8 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
   const [isDarkMode, setIsDarkMode] = useState<boolean>();
   const [user, setUser] = useState<UserType>();
   const { isLoading, fetchDataWithLoadingTimeout } = useFetch();
-  const [acceptedCookies, setAcceptedCookies] = useState<boolean>(false);
-  const { t } = useTranslation();
+  const [acceptedCookies, setAcceptedCookies] = useState<boolean>(true);
+  const { t } = useTranslation(I18nNamespace.COMMON);
 
   useEffect(() => {
     const darkMode = window.localStorage.getItem('darkMode');
@@ -45,7 +46,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
   return (
     <GlobalContextProvider user={user} setUser={setUser}>
       <div
-        className={`${isDarkMode ? 'tw-dark' : ''} tw-min-w-screen tw-flex tw-min-h-screen tw-transform-gpu tw-flex-col tw-bg-white tw-bg-gradient-to-br tw-from-cyan-900/30 tw-via-purple-400/30 tw-to-blue-800/30 tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-from-violet-950/20 dark:tw-via-rose-950/20 dark:tw-to-purple-950/20 dark:tw-text-white`}
+        className={`${isDarkMode ? 'tw-dark' : ''} tw-min-w-screen tw-flex tw-min-h-screen tw-transform-gpu tw-flex-col tw-bg-white tw-bg-gradient-to-br tw-from-cyan-900/30 tw-via-purple-400/30 tw-to-blue-800/30 tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-from-violet-900/20 dark:tw-via-rose-900/20 dark:tw-to-purple-900/20 dark:tw-text-white`}
       >
         {!acceptedCookies && (
           <div className="tw-flex tw-h-[100vh] tw-flex-col tw-items-center tw-justify-center">
@@ -65,6 +66,21 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
         {isLoading && acceptedCookies && (
           <div className="tw-flex tw-h-[100vh] tw-items-center tw-justify-center">
             <LoadingSpinner size="16" />
+          </div>
+        )}
+        {!acceptedCookies && !isLoading && (
+          <div className="tw-flex tw-h-[100vh] tw-flex-col tw-items-center tw-justify-center">
+            <h2>{t('cookies.title')}</h2>
+            <p className="tw-text-center">{t('cookies.message')}</p>
+            <Button
+              onClick={() => {
+                window.localStorage.setItem('acceptedCookies', acceptedCookies.toString());
+                setAcceptedCookies(true);
+              }}
+              invertedStyle
+            >
+              {t('cookies.acknowledge')}
+            </Button>
           </div>
         )}
         {!isLoading && acceptedCookies && (

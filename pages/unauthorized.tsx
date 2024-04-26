@@ -38,7 +38,7 @@ export default Unauthorized;
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const translations = await serverSideTranslations(
     ctx.locale ?? NEXT_I18NEXT_CONFIG.i18n.defaultLocale,
-    [I18nNamespace.UNAUTHORIZED],
+    [I18nNamespace.COMMON, I18nNamespace.UNAUTHORIZED],
     NEXT_I18NEXT_CONFIG,
   );
   return { props: { ...translations } };
