@@ -65,7 +65,6 @@ const nextConfig = {
     ];
   },
   i18n,
-  output: 'standalone'
 };
 
 export default nextConfig;
