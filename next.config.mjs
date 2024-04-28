@@ -52,6 +52,7 @@ const securityHeaders = [
 
 const nextConfig = {
   reactStrictMode: true,
+  outputFileTracing: true,
   headers: async () => {
     return [
       {
