@@ -102,7 +102,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                 isValue={isDarkMode}
                 setValue={setIsDarkMode}
                 onChange={() => {
-                  setCookie('dark_mode', !isDarkMode, { sameSite: 'lax', path: '/' });
+                  window.localStorage.setItem('darkMode', (!!isDarkMode).toString());
                 }}
               />
               <Dropdown
