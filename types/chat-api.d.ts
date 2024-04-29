@@ -10,6 +10,7 @@ declare global {
       type SignupResponse = UserType;
       type LoginResponse = { accessToken: string };
       type GetUserResponse = UserType;
+      type GetProfilePictureResponse = string;
     }
   }
 }

@@ -2,6 +2,7 @@ enum APIOperation {
   SIGNUP_USER = 'post:user/signup',
   LOGIN = 'post:auth/login',
   GET_USER = 'get:user',
+  GET_PROFILE_PICTURE = 'get:user/profile-picture',
 }
 
 type APIContext = {
@@ -16,6 +17,10 @@ type APIContext = {
     { email: string; password: string }
   >;
   [APIOperation.GET_USER]: RequestContext<APIOperation.GET_USER, CHAT_API.Responses.GetUserResponse>;
+  [APIOperation.GET_PROFILE_PICTURE]: RequestContext<
+    APIOperation.GET_PROFILE_PICTURE,
+    CHAT_API.Responses.GetProfilePictureResponse
+  >;
 };
 
 type WithPayload<TBase, TPayload> = TPayload extends void

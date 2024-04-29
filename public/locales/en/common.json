@@ -6,5 +6,10 @@
   },
   "errors": {
     "server": "An error occurred! Please try again later."
+  },
+  "header": {
+    "signup": "Signup",
+    "login": "Login",
+    "chat": "Chat"
   }
 }
