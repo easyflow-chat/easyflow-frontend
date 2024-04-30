@@ -11,5 +11,9 @@
     "signup": "Signup",
     "login": "Login",
     "chat": "Chat"
+  },
+  "home": {
+    "title": "Available soon!",
+    "getStarted": "Get started"
   }
 }

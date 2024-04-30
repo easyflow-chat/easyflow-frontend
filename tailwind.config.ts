@@ -11,6 +11,9 @@ const config: Config = {
       animation: {
         dash: 'dash 1.5s ease-in-out infinite',
       },
+      screens: {
+        '3xl': '1800px',
+      },
       fontFamily: {
         rubik: ['Rubik', 'sans-serif'],
       },

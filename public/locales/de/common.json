@@ -11,5 +11,9 @@
     "signup": "Registrieren",
     "login": "Anmelden",
     "chat": "Chat"
+  },
+  "home": {
+    "title": "Schon bald verfügbar!",
+    "getStarted": "Loslegen"
   }
 }

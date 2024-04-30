@@ -7,7 +7,7 @@ interface ToggleProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Toggle: FunctionComponent<ToggleProps> = ({ isValue, setValue, ...props }): JSX.Element => {
   return (
-    <label className="tw-mx-3 tw-my-auto tw-flex tw-h-[34px] tw-w-[60px] tw-items-center tw-rounded-full tw-bg-black xl:hover:tw-cursor-pointer dark:tw-bg-white">
+    <label className="tw-my-auto tw-flex tw-h-[34px] tw-w-[60px] tw-items-center tw-rounded-full tw-bg-black xl:hover:tw-cursor-pointer dark:tw-bg-white">
       <input
         {...props}
         type="checkbox"
