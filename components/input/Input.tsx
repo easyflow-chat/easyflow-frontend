@@ -15,7 +15,7 @@ const Input: FunctionComponent<InputProps> = ({ label, errors, required, type, .
   return (
     <div className={`tw-group tw-my-5 ${errors ? 'errors' : ''}`}>
       {label && (
-        <p className="tw-m-0 tw-mb-1 tw-text-sm tw-text-gray-400 group-[.errors]:tw-text-red-500">
+        <p className="tw-m-0 tw-mb-1 tw-text-sm tw-text-gray-800 group-[.errors]:tw-text-red-500 dark:tw-text-gray-400">
           {required && '*'}
           {label}
         </p>
@@ -33,6 +33,7 @@ const Input: FunctionComponent<InputProps> = ({ label, errors, required, type, .
             alt="show/hide"
             className="tw-absolute tw-bottom-2 tw-right-1 tw-rounded-md xl:hover:tw-cursor-pointer dark:tw-invert"
             onClick={() => setShowPass(!showPass)}
+            draggable="false"
           />
         )}
       </div>

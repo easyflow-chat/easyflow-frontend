@@ -8,9 +8,11 @@
     "server": "An error occurred! Please try again later."
   },
   "header": {
-    "signup": "Signup",
+    "chat": "Chat",
     "login": "Login",
-    "chat": "Chat"
+    "logout": "Logout",
+    "profile": "Profile",
+    "signup": "Signup"
   },
   "home": {
     "title": "Available soon!",

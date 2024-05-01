@@ -8,9 +8,11 @@
     "server": "Ein Fehler ist aufgetreten! Bitte versuchen Sie es später erneut."
   },
   "header": {
-    "signup": "Registrieren",
+    "chat": "Chat",
     "login": "Anmelden",
-    "chat": "Chat"
+    "logout": "Abmelden",
+    "profile": "Profil",
+    "signup": "Registrieren"
   },
   "home": {
     "title": "Schon bald verfügbar!",

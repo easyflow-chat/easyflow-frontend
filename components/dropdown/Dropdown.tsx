@@ -32,6 +32,7 @@ const Dropdown: FunctionComponent<DropdownProps> = ({ value, options, onChange }
           src={downArrow}
           alt="Down arrow"
           className="tw-m-1 tw-h-4 tw-w-4 tw-origin-center tw-transition-transform tw-duration-300 group-[.open]/dropdown:tw-rotate-180 dark:tw-invert"
+          draggable="false"
         />
       </div>
       <div className="tw-absolute tw-max-h-0 tw-overflow-hidden tw-transition-max-height tw-duration-300 group-[.open]/dropdown:tw-max-h-96">
