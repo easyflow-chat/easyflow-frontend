@@ -37,7 +37,7 @@ const useUser = (): useUserType => {
       } else {
         setUser(userRes.data);
         addSuccessNotification(t('login:success'));
-        await router.replace(`/chat/${userRes.data.id}`);
+        await router.replace('/chat');
       }
     }
   };

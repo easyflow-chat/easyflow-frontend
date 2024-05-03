@@ -13,7 +13,7 @@ const Home: FunctionComponent = (): JSX.Element => {
   const router = useRouter();
   const { t } = useTranslation();
   return (
-    <div className="tw-fixed tw-left-0 tw-top-20 tw-flex tw-h-fit tw-min-h-[calc(100%-272px)] tw-w-[calc(100vw-192px)] tw-flex-col tw-items-center tw-justify-center tw-p-24 tw-backdrop-brightness-75 xl:tw-flex-row">
+    <div className="tw-fixed tw-left-0 tw-top-20 tw-flex tw-h-fit tw-min-h-[calc(100%-272px)] tw-w-[calc(100vw-192px)] tw-flex-col tw-items-center tw-justify-center tw-p-24 xl:tw-flex-row">
       <div className="tw-m-5 tw-flex tw-flex-col tw-items-center xl:tw-flex-row 3xl:tw-m-20">
         <Image src={logo} alt="Logo" className="tw-h-full tw-w-full dark:tw-invert" draggable="false" />
         <h1 className="tw-m-0 tw-text-[125px] tw-font-light md:tw-text-[150px] lg:tw-text-[175px] xl:tw-text-[200px] 2xl:tw-text-[225px] 3xl:tw-text-[250px]">

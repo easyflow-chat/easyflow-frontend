@@ -1,12 +1,12 @@
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { FunctionComponent, useContext, useEffect } from 'react';
-import NEXT_I18NEXT_CONFIG from '../../config/i18n.config';
-import { GlobalContext } from '../../context/gloabl.context';
-import { I18nNamespace } from '../../enums/i18n.enum';
-import { APIOperation } from '../../services/api-services/common';
-import { serverSideRequest } from '../../services/api-services/server-side';
-import { UserType } from '../../types/user.type';
+import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
+import { GlobalContext } from '../context/gloabl.context';
+import { I18nNamespace } from '../enums/i18n.enum';
+import { APIOperation } from '../services/api-services/common';
+import { serverSideRequest } from '../services/api-services/server-side';
+import { UserType } from '../types/user.type';
 
 interface ChatType {
   propUser?: UserType;
@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   );
   try {
     const res = await serverSideRequest<APIOperation.GET_USER>(ctx.req, { op: APIOperation.GET_USER });
-    if (res.data.id !== ctx.params?.userId) {
+    if (!res.data) {
       throw Error('Unauthorized');
     } else {
       return { props: { user: res.data, ...translations } };

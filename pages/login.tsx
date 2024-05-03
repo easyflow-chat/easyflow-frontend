@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       return {
         redirect: {
           permanent: false,
-          destination: `/chat/${userRes.data.id}`,
+          destination: '/chat',
         },
       };
     }

@@ -30,7 +30,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
   useDetectOutsideClick(profileRef, setIsProfileOpen);
 
   return (
-    <header className="tw-sticky tw-top-0 tw-z-50 tw-flex tw-h-20 tw-w-full tw-justify-center tw-shadow-sm tw-shadow-black/20 tw-backdrop-blur-3xl tw-backdrop-brightness-75">
+    <header className="tw-sticky tw-top-0 tw-z-50 tw-flex tw-h-20 tw-w-full tw-justify-center tw-bg-white/75 tw-shadow-sm tw-shadow-black/20 tw-backdrop-blur-3xl dark:tw-bg-black/75">
       <div className="tw-flex tw-w-full tw-max-w-[2100px] tw-items-center tw-justify-between">
         <Link href="/" className="tw-mx-4">
           <Image src={logo} alt="Logo" className="tw-h-14 tw-w-14 dark:tw-invert" draggable="false" />
@@ -135,18 +135,18 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                 />
                 {profilePicture ? (
                   <img
-                    className="tw-h-full tw-w-full tw-rounded-full"
+                    className="tw-h-full tw-w-full tw-rounded-full tw-border-2 tw-border-solid tw-border-black dark:tw-border-white"
                     src={`data:image;base64,${profilePicture}`}
                     alt="Profile"
                     draggable="false"
                   />
                 ) : (
-                  <div className="tw-h-full tw-w-full tw-rounded-full tw-bg-gradient-to-br tw-from-lime-400 tw-to-sky-400" />
+                  <div className="tw-h-full tw-w-full tw-rounded-full tw-border-2 tw-border-solid tw-border-black tw-bg-gradient-to-br tw-from-lime-400 tw-to-sky-400 dark:tw-border-white" />
                 )}
               </label>
               <div className="tw-absolute tw-right-0 tw-top-20 tw-z-50 tw-m-3 tw-h-fit tw-max-h-0 tw-w-fit tw-overflow-hidden tw-rounded-2xl tw-bg-black/20 tw-backdrop-blur-lg tw-transition-max-height tw-duration-500 peer-has-[input:checked]:tw-max-h-96">
                 <div className="tw-flex tw-flex-col tw-justify-end tw-px-10 tw-py-5">
-                  <div className="tw-flex tw-flex-col tw-items-end *:tw-m-1 *:tw-text-xl *:tw-font-semibold *:tw-text-black *:tw-no-underline *:tw-decoration-2 *:tw-underline-offset-4 *:dark:tw-text-white">
+                  <div className="tw-mb-2 tw-flex tw-flex-col tw-items-end *:tw-m-1 *:tw-text-xl *:tw-font-semibold *:tw-text-black *:tw-no-underline *:tw-decoration-2 *:tw-underline-offset-4 *:dark:tw-text-white">
                     <Link href="/chat" className="hover:tw-underline" onClick={() => setIsProfileOpen(false)}>
                       {t('header.chat')}
                     </Link>
@@ -155,10 +155,11 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                     </Link>
                   </div>
                   <Button
-                    onClick={() => {
+                    onClick={async () => {
                       setIsProfileOpen(false);
                       setUser(undefined);
                       deleteCookie('access_token', { path: '/' });
+                      await router.push('/');
                     }}
                     invertedStyle
                   >

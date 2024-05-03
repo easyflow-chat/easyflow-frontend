@@ -17,8 +17,10 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
   const [isDarkMode, setIsDarkMode] = useState<boolean>();
   const [profilePicture, setProfilePicture] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<UserType>();
-  const { isLoading, fetchDataWithLoadingTimeout } = useFetch();
   const [acceptedCookies, setAcceptedCookies] = useState<boolean>(true);
+  const [hideHeader, setHideHeader] = useState<boolean>(false);
+
+  const { isLoading, fetchDataWithLoadingTimeout } = useFetch();
   const { t } = useTranslation(I18nNamespace.COMMON);
 
   useEffect(() => {
@@ -64,9 +66,11 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
       setUser={setUser}
       profilePicture={profilePicture}
       setProfilePicture={setProfilePicture}
+      hideHeader={hideHeader}
+      setHideHeader={setHideHeader}
     >
       <div
-        className={`${isDarkMode ? 'tw-dark' : ''} tw-absolute tw-left-0 tw-top-0 tw-flex tw-min-h-full tw-min-w-full tw-transform-gpu tw-flex-col tw-overflow-scroll tw-bg-white tw-bg-gradient-to-br tw-from-cyan-800/50 tw-via-purple-600/50 tw-to-blue-700/50 tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-text-white`}
+        className={`${isDarkMode ? 'tw-dark' : ''} tw-absolute tw-left-0 tw-top-0 tw-flex tw-min-h-full tw-min-w-full tw-transform-gpu tw-flex-col tw-overflow-scroll tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-text-white`}
       >
         {isLoading && (
           <div className="tw-flex tw-h-[100vh] tw-items-center tw-justify-center">
@@ -90,7 +94,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
         )}
         {!isLoading && acceptedCookies && (
           <>
-            <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+            {!hideHeader && <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />}
             <NotificationsProvider>
               <div className="tw-xl:tw-w-[70vw] tw-mx-auto tw-h-full tw-min-h-[calc(100vh-113px)] tw-w-[calc(100%-32px)] tw-max-w-[2000px] tw-p-4">
                 <Component {...pageProps} />
