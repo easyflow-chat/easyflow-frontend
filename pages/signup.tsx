@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import SignUp from '../components/signup/signup';
+import SignUp from '../components/signup/Signup';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
 import { I18nNamespace } from '../enums/i18n.enum';
 import { APIOperation } from '../services/api-services/common';

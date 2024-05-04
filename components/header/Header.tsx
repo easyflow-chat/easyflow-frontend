@@ -30,7 +30,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
   useDetectOutsideClick(profileRef, setIsProfileOpen);
 
   return (
-    <header className="tw-sticky tw-top-0 tw-z-50 tw-flex tw-h-20 tw-w-full tw-justify-center tw-bg-white/75 tw-shadow-sm tw-shadow-black/20 tw-backdrop-blur-3xl dark:tw-bg-black/75">
+    <header className="tw-sticky tw-top-0 tw-z-50 tw-flex tw-h-20 tw-w-full tw-justify-center tw-bg-transparent/25 tw-shadow-sm tw-shadow-black/20 tw-backdrop-blur-3xl">
       <div className="tw-flex tw-w-full tw-max-w-[2100px] tw-items-center tw-justify-between">
         <Link href="/" className="tw-mx-4">
           <Image src={logo} alt="Logo" className="tw-h-14 tw-w-14 dark:tw-invert" draggable="false" />
@@ -78,27 +78,31 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
           </label>
           <div className="tw-dark tw-absolute tw-right-0 tw-top-20 tw-flex tw-h-[calc(100vh-80px)] tw-w-0 tw-flex-col tw-items-center tw-overflow-hidden tw-bg-black/75 tw-text-white tw-backdrop-blur-xl tw-transition-width tw-duration-500 peer-has-[input:checked]/label:tw-w-screen ">
             <div className="tw-m-8">
-              <div className="tw-m-2">
-                <Button
-                  onClick={async () => {
-                    setIsHamburgerOpen(false);
-                    await router.push('/signup');
-                  }}
-                  invertedStyle
-                >
-                  {t('header.signup')}
-                </Button>
-              </div>
-              <div className="tw-m-2">
-                <Button
-                  onClick={async () => {
-                    setIsHamburgerOpen(false);
-                    await router.push('/login');
-                  }}
-                >
-                  {t('header.login')}
-                </Button>
-              </div>
+              {!user && (
+                <>
+                  <div className="tw-m-2">
+                    <Button
+                      onClick={async () => {
+                        setIsHamburgerOpen(false);
+                        await router.push('/signup');
+                      }}
+                      invertedStyle
+                    >
+                      {t('header.signup')}
+                    </Button>
+                  </div>
+                  <div className="tw-m-2">
+                    <Button
+                      onClick={async () => {
+                        setIsHamburgerOpen(false);
+                        await router.push('/login');
+                      }}
+                    >
+                      {t('header.login')}
+                    </Button>
+                  </div>
+                </>
+              )}
               <div className="tw-flex tw-items-center tw-justify-center">
                 <div className="tw-m-2">
                   <Toggle isValue={isDarkMode} setValue={setIsDarkMode} onChange={() => setIsHamburgerOpen(false)} />
@@ -131,7 +135,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                   type="checkbox"
                   className="tw-hidden"
                   checked={isProfileOpen}
-                  onClick={() => setIsProfileOpen(val => !val)}
+                  onChange={() => setIsProfileOpen(val => !val)}
                 />
                 {profilePicture ? (
                   <img

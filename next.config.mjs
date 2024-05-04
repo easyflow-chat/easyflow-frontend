@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-import path from 'path';
 import i18n from './next-18next.config.mjs';
 
 // https://securityheaders.com

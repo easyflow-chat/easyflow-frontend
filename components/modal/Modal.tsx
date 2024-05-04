@@ -1,20 +1,31 @@
+// create a custom component that will be used as a modal and has a ref
+
 import Image from 'next/image';
-import { Children, FunctionComponent, PropsWithChildren, ReactNode, RefObject, createRef } from 'react';
+import { Children, ReactElement, ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
 import closeCross from '../../public/images/close-cross.svg';
 import ModalContent from './ModalContent';
 import ModalTrigger from './ModalTrigger';
 
-interface DialogProps {
-  ref?: RefObject<HTMLDialogElement>;
-  children?: ReactNode;
+interface ModalProps {
+  title?: string;
+  children: ReactNode;
 }
 
-const Modal: FunctionComponent<PropsWithChildren<DialogProps>> = ({
-  ref = createRef<HTMLDialogElement>(),
-  children,
-}) => {
+export interface ModalRef {
+  open: () => void;
+  close: () => void;
+}
+
+// eslint-disable-next-line
+const Modal = forwardRef<ModalRef, ModalProps>(({ title, children }, ref) => {
+  const modalRef = useRef<HTMLDialogElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    open: () => modalRef.current?.showModal(),
+    close: () => modalRef.current?.close(),
+  }));
   // eslint-disable-next-line
-  const isReactElement = (arg: any): arg is React.ReactElement => {
+  const isReactElement = (arg: any): arg is ReactElement => {
     // eslint-disable-next-line
     return arg.hasOwnProperty('type');
   };
@@ -25,28 +36,28 @@ const Modal: FunctionComponent<PropsWithChildren<DialogProps>> = ({
 
   return (
     <>
-      <div onClick={() => ref.current?.showModal()}>{trigger}</div>
+      <div onClick={() => modalRef.current?.showModal()}>{trigger}</div>
       <dialog
-        open={false}
-        ref={ref}
-        className="dark:tw-backdrop tw-fixed tw-inset-0 tw-z-[1000] tw-m-auto tw-flex tw-h-screen tw-w-screen tw-items-center tw-justify-center tw-border-none tw-bg-transparent tw-p-0 tw-backdrop-blur-lg tw-backdrop-brightness-50"
+        ref={modalRef}
+        className="tw-z[1000] tw-fixed tw-h-fit tw-max-h-[calc(100vh-32px)] tw-min-h-32 tw-w-fit tw-min-w-64 tw-max-w-[1880px] tw-rounded-xl tw-border-none tw-bg-gradient-to-br tw-from-cyan-300/20 tw-via-purple-500/20 tw-to-blue-500/20 tw-py-10 backdrop:tw-backdrop-blur-lg dark:tw-bg-black dark:tw-text-white"
       >
-        <div className="tw-relative tw-h-fit tw-max-h-[1000px] tw-min-h-32 tw-w-fit tw-min-w-64 tw-max-w-[1800px] tw-rounded-xl tw-bg-gray-100 tw-p-5 tw-text-black dark:tw-bg-[#080808] dark:tw-text-white">
-          <form method="dialog" className="tw-absolute tw-right-2 tw-top-2">
-            <button>
-              <Image
-                src={closeCross}
-                alt="Close cross"
-                className="tw-h-5 tw-w-5 hover:tw-cursor-pointer dark:tw-invert"
-              />
-            </button>
-          </form>
+        <Image
+          ref={ref => {
+            if (!ref) return;
 
+            ref.onclick = () => modalRef.current?.close();
+          }}
+          src={closeCross}
+          alt="close cross"
+          className="tw-absolute tw-right-3 tw-top-3 hover:tw-cursor-pointer dark:tw-invert"
+        />
+        <h1 className="tw-left-8 tw-top-3 tw-m-0 tw-mb-3">{title}</h1>
+        <div className="tw-h-full tw-max-h-[calc(100vh-200px)] tw-w-[100%-80px] tw-overflow-scroll tw-px-10">
           {content}
         </div>
       </dialog>
     </>
   );
-};
+});
 
 export default Modal;

@@ -23,7 +23,7 @@ const SignUp: FunctionComponent = () => {
             <Input
               label={t('signup:email')}
               placeholder="example@example.com"
-              type="text"
+              type="email"
               value={values.email}
               errors={touched.email && errors.email ? errors.email : undefined}
               onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}

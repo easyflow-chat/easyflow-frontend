@@ -1,8 +1,11 @@
 import { GetServerSideProps } from 'next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
-import { useContext, useRef } from 'react';
-import Modal from '../components/modal/Modal';
+import { useContext, useRef, useState } from 'react';
+import Button from '../components/button/Button';
+import FileUpload from '../components/fileUpload/FileUpload';
+import Modal, { ModalRef } from '../components/modal/Modal';
 import ModalContent from '../components/modal/ModalContent';
 import ModalTrigger from '../components/modal/ModalTrigger';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
@@ -13,13 +16,17 @@ import { APIOperation } from '../services/api-services/common';
 import { serverSideRequest } from '../services/api-services/server-side';
 
 const Profile = (): JSX.Element => {
-  const modalRef = useRef<HTMLDialogElement>(null);
+  const modalRef = useRef<ModalRef>(null);
   const { profilePicture, user } = useContext(GlobalContext);
+  const { t } = useTranslation();
+  // eslint-disable-next-line
+  const [file, setFile] = useState<File>();
+
   return (
     <div>
       <div className="tw-flex tw-flex-col tw-items-center">
         <div className="tw-relative">
-          <Modal ref={modalRef}>
+          <Modal ref={modalRef} title={t('profile:profilePicture.modalTitle')}>
             <ModalTrigger>
               <Image
                 src={editPen}
@@ -28,8 +35,10 @@ const Profile = (): JSX.Element => {
               />
             </ModalTrigger>
             <ModalContent>
-              <div>
-                <h1>Modal</h1>
+              <div className="tw-flex tw-flex-col tw-items-center">
+                {/* process that file and send to the backend for storing */}
+                <FileUpload allowedFileTypes={['image/png', 'image/jpg']} icon="" setFile={setFile} />
+                <Button invertedStyle>{t('profile:profilePicture.save')}</Button>
               </div>
             </ModalContent>
           </Modal>

@@ -58,7 +58,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
       }
     };
     void getProfilePicture();
-  }, [user?.id]);
+  }, [user]);
 
   return (
     <GlobalContextProvider
@@ -70,7 +70,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
       setHideHeader={setHideHeader}
     >
       <div
-        className={`${isDarkMode ? 'tw-dark' : ''} tw-absolute tw-left-0 tw-top-0 tw-flex tw-min-h-full tw-min-w-full tw-transform-gpu tw-flex-col tw-overflow-scroll tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-text-white`}
+        className={`${isDarkMode ? 'tw-dark' : ''} tw-absolute tw-left-0 tw-top-0 tw-flex tw-min-h-full tw-min-w-full tw-transform-gpu tw-flex-col tw-overflow-scroll tw-bg-gradient-to-br tw-from-cyan-300/40 tw-via-purple-500/40 tw-to-blue-500/40 tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-text-white`}
       >
         {isLoading && (
           <div className="tw-flex tw-h-[100vh] tw-items-center tw-justify-center">
