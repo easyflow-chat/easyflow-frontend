@@ -15,18 +15,12 @@ const Unauthorized: FunctionComponent = (): JSX.Element => {
       <div className="tw-text-center">
         <h1>{t('unauthorized:title')}</h1> {/* If possible replace with a ilustration */}
         <p>{t('unauthorized:message')}</p>
-        <div className="tw-flex tw-justify-center">
-          <div className="tw-m-2">
-            <Button onClick={() => router.replace('/login')}>{t('unauthorized:buttons.login')}</Button>
-          </div>
-          <div className="tw-m-2">
-            <Button onClick={() => router.replace('/signup')} invertedStyle>
-              {t('unauthorized:buttons.signup')}
-            </Button>
-          </div>
-          <div className="tw-m-2">
-            <Button onClick={() => router.replace('/')}>{t('unauthorized:buttons.home')}</Button>
-          </div>
+        <div className="tw-flex tw-flex-col tw-items-center tw-justify-center md:tw-flex-row">
+          <Button onClick={() => router.replace('/login')}>{t('unauthorized:buttons.login')}</Button>
+          <Button onClick={() => router.replace('/signup')} invertedStyle>
+            {t('unauthorized:buttons.signup')}
+          </Button>
+          <Button onClick={() => router.replace('/')}>{t('unauthorized:buttons.home')}</Button>
         </div>
       </div>
     </div>

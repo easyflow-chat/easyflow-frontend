@@ -49,9 +49,9 @@ const Modal = forwardRef<ModalRef, ModalProps>(({ title, children }, ref) => {
           }}
           src={closeCross}
           alt="close cross"
-          className="tw-absolute tw-right-3 tw-top-3 hover:tw-cursor-pointer dark:tw-invert"
+          className="tw-absolute tw-right-3 tw-top-3 tw-rounded-md tw-p-1 hover:tw-cursor-pointer hover:tw-bg-black/10 dark:tw-invert"
         />
-        <h1 className="tw-left-8 tw-top-3 tw-m-0 tw-mb-3">{title}</h1>
+        <h1 className="tw-left-8 tw-top-3 tw-mx-10 tw-mb-3">{title}</h1>
         <div className="tw-h-full tw-max-h-[calc(100vh-200px)] tw-w-[100%-80px] tw-overflow-scroll tw-px-10">
           {content}
         </div>

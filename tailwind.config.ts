@@ -36,6 +36,7 @@ const config: Config = {
       transitionProperty: {
         'max-height': 'max-height',
         width: 'width',
+        height: 'height',
       },
     },
   },

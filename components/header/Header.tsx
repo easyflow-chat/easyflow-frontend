@@ -148,7 +148,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                   <div className="tw-h-full tw-w-full tw-rounded-full tw-border-2 tw-border-solid tw-border-black tw-bg-gradient-to-br tw-from-lime-400 tw-to-sky-400 dark:tw-border-white" />
                 )}
               </label>
-              <div className="tw-absolute tw-right-0 tw-top-20 tw-z-50 tw-m-3 tw-h-fit tw-max-h-0 tw-w-fit tw-overflow-hidden tw-rounded-2xl tw-bg-black/20 tw-backdrop-blur-lg tw-transition-max-height tw-duration-500 peer-has-[input:checked]:tw-max-h-96">
+              <div className="tw-absolute tw-right-0 tw-top-20 tw-z-50 tw-m-3 tw-h-[calc(100vh-150px)] tw-max-h-0 tw-w-fit tw-overflow-hidden tw-rounded-2xl tw-bg-black/20 tw-backdrop-blur-lg tw-transition-max-height tw-duration-500 peer-has-[input:checked]:tw-max-h-screen">
                 <div className="tw-flex tw-flex-col tw-justify-end tw-px-10 tw-py-5">
                   <div className="tw-mb-2 tw-flex tw-flex-col tw-items-end *:tw-m-1 *:tw-text-xl *:tw-font-semibold *:tw-text-black *:tw-no-underline *:tw-decoration-2 *:tw-underline-offset-4 *:dark:tw-text-white">
                     <Link href="/chat" className="hover:tw-underline" onClick={() => setIsProfileOpen(false)}>
@@ -158,17 +158,19 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                       {t('header.profile')}
                     </Link>
                   </div>
-                  <Button
-                    onClick={async () => {
-                      setIsProfileOpen(false);
-                      setUser(undefined);
-                      deleteCookie('access_token', { path: '/' });
-                      await router.push('/');
-                    }}
-                    invertedStyle
-                  >
-                    {t('header.logout')}
-                  </Button>
+                  <div className="tw-mr-[-8px]">
+                    <Button
+                      onClick={async () => {
+                        setIsProfileOpen(false);
+                        setUser(undefined);
+                        deleteCookie('access_token', { path: '/' });
+                        await router.push('/');
+                      }}
+                      invertedStyle
+                    >
+                      {t('header.logout')}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

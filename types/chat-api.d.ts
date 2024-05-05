@@ -11,6 +11,7 @@ declare global {
       type LoginResponse = { accessToken: string };
       type GetUserResponse = UserType;
       type GetProfilePictureResponse = string;
+      type UpdateUserResponse = UserType;
     }
   }
 }

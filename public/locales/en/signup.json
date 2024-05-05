@@ -11,6 +11,10 @@
     "passwordsNotEqual": "Paasswords do not match!",
     "emailExists": "E-Mail already exists!"
   },
+  "name": {
+    "label": "Name",
+    "placeholder": "John Doe"
+  },
   "password": "Password",
   "signup": "Signup",
   "success": "Signup successful!"

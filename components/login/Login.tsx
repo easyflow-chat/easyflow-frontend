@@ -11,15 +11,15 @@ const Login: FunctionComponent = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const { isLoading, login } = useUser();
   return (
-    <div className="tw-mt-16 tw-flex tw-flex-col tw-items-center">
+    <div className="tw-m-auto tw-mt-16 tw-flex tw-w-[calc(100%-32px)] tw-flex-col tw-items-center tw-rounded-lg tw-p-4 tw-backdrop-brightness-90 xl:tw-w-96">
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={validationSchema(t)}
         onSubmit={async values => setErrorMessage(await login(values.email, values.password))}
       >
         {({ errors, touched, values, isValid, setFieldTouched, setFieldValue }) => (
-          <Form>
-            <h2>{t('login:login')}</h2>
+          <Form className="tw-w-full">
+            <h2 className="tw-mt-0">{t('login:login')}</h2>
             <Input
               label={t('login:email')}
               placeholder="example@example.com"
@@ -40,9 +40,11 @@ const Login: FunctionComponent = () => {
               required
             />
             {errorMessage && <p className="tw-text-red-500">{errorMessage}</p>}
-            <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
-              {t('login:login')}
-            </Button>
+            <div className="tw-ml-[-8px]">
+              <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
+                {t('login:login')}
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

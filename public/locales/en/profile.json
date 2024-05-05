@@ -1,6 +1,17 @@
 {
+  "profile": {
+    "title": "Profil",
+    "name": "Name",
+    "bio": "Bio",
+    "modal": {
+      "title": "Edit profile",
+      "save": "Save",
+      "abort": "Abort"
+    }
+  },
   "profilePicture": {
     "modalTitle": "Change profile picture",
+    "reset": "Reset",
     "save": "Save"
   }
 }
