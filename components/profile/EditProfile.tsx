@@ -12,7 +12,6 @@ import ModalContent from '../modal/ModalContent';
 import ModalTrigger from '../modal/ModalTrigger';
 import Textarea from '../textarea/Textarea';
 import { validationSchema } from './validtation-schema';
-import { redirect } from 'next/navigation';
 
 const EditProfile = (): JSX.Element => {
   const modalRef = useRef<ModalRef>(null);
@@ -25,7 +24,8 @@ const EditProfile = (): JSX.Element => {
     modalRef.current?.close();
   };
 
-  if (!user) redirect('/unauthorized');
+  //This is shit but seems to work
+  if (!user) return <></>;
 
   return (
     <div className="tw-relative tw-m-4 tw-h-full tw-min-h-96 tw-w-[calc(100%-64px)] tw-rounded-lg tw-p-4 tw-shadow-md tw-shadow-black/20 tw-backdrop-brightness-90 xl:tw-w-[60%]">
@@ -50,6 +50,7 @@ const EditProfile = (): JSX.Element => {
               {({ errors, values, touched, isValid, setFieldValue, setFieldTouched }) => (
                 <Form className="tw-w-full">
                   <Input
+                    maxLength={255}
                     label={t('profile:profile.name')}
                     type="text"
                     value={values.name}

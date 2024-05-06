@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       animation: {
         dash: 'dash 1.5s ease-in-out infinite',
+        'modal-open': 'modal-open 0.5s ease-in-out',
       },
       screens: {
         '3xl': '1800px',
@@ -18,6 +19,14 @@ const config: Config = {
         rubik: ['Rubik', 'sans-serif'],
       },
       keyframes: {
+        'modal-open': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
         dash: {
           '0%': {
             'stroke-dasharray': '1, 150',

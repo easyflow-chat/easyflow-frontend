@@ -4,9 +4,14 @@
     "name": "Name",
     "bio": "Bio",
     "modal": {
-      "title": "Edit profile",
+      "abort": "Abort",
+      "errors": {
+        "required": "This field is required",
+        "maxLength1000": "This field cnnot be longer than 1000 characters",
+        "maxLength255": "This field cannot be logner than 255 characters"
+      },
       "save": "Save",
-      "abort": "Abort"
+      "title": "Edit profile"
     }
   },
   "profilePicture": {

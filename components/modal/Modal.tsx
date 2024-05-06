@@ -39,7 +39,7 @@ const Modal = forwardRef<ModalRef, ModalProps>(({ title, children }, ref) => {
       <div onClick={() => modalRef.current?.showModal()}>{trigger}</div>
       <dialog
         ref={modalRef}
-        className="tw-z[1000] tw-fixed tw-h-fit tw-max-h-[calc(100vh-32px)] tw-min-h-32 tw-w-fit tw-min-w-64 tw-max-w-[1880px] tw-rounded-xl tw-border-none tw-bg-gradient-to-br tw-from-cyan-300/20 tw-via-purple-500/20 tw-to-blue-500/20 tw-py-10 backdrop:tw-backdrop-blur-lg dark:tw-bg-black dark:tw-text-white"
+        className="tw-fixed tw-z-[1000] tw-h-fit tw-max-h-[calc(100vh-32px)] tw-min-h-32 tw-w-fit tw-min-w-64 tw-max-w-[1880px] tw-rounded-xl tw-border-none tw-bg-gradient-to-br tw-from-cyan-300/20 tw-via-purple-500/20 tw-to-blue-500/20 tw-py-10 backdrop:tw-backdrop-blur-lg dark:tw-bg-black dark:tw-text-white"
       >
         <Image
           ref={ref => {
