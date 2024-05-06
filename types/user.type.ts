@@ -3,4 +3,6 @@ export type UserType = {
   createdAt: Date;
   updatedAt: Date;
   email: string;
+  name: string;
+  bio?: string;
 };

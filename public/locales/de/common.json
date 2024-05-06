@@ -6,5 +6,16 @@
   },
   "errors": {
     "server": "Ein Fehler ist aufgetreten! Bitte versuchen Sie es später erneut."
+  },
+  "header": {
+    "chat": "Chat",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "profile": "Profil",
+    "signup": "Registrieren"
+  },
+  "home": {
+    "title": "Schon bald verfügbar!",
+    "getStarted": "Loslegen"
   }
 }

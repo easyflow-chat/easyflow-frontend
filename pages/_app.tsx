@@ -1,8 +1,8 @@
 import { appWithTranslation, useTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { FunctionComponent, useEffect, useState } from 'react';
-import Header from '../components/header/Header';
 import Button from '../components/button/Button';
+import Header from '../components/header/Header';
 import LoadingSpinner from '../components/loadingSpinner/LoadingSpinner';
 import NotificationsProvider from '../components/notification/NotificationProvider';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
@@ -15,9 +15,12 @@ import { UserType } from '../types/user.type';
 
 const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pageProps }): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>();
+  const [profilePicture, setProfilePicture] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<UserType>();
-  const { isLoading, fetchDataWithLoadingTimeout } = useFetch();
   const [acceptedCookies, setAcceptedCookies] = useState<boolean>(true);
+  const [hideHeader, setHideHeader] = useState<boolean>(false);
+
+  const { isLoading, fetchDataWithLoadingTimeout } = useFetch();
   const { t } = useTranslation(I18nNamespace.COMMON);
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
       }
     };
     void reqUser();
-    setAcceptedCookies(Boolean(window.localStorage.getItem('acceptedCookies')));
+    setAcceptedCookies(window.localStorage.getItem('acceptedCookies') === 'true' ? true : false);
   }, []);
 
   useEffect(() => {
@@ -43,10 +46,31 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    const getProfilePicture = async (): Promise<void> => {
+      if (user) {
+        const res = await fetchDataWithLoadingTimeout({
+          op: APIOperation.GET_PROFILE_PICTURE,
+        });
+        if (res.success) {
+          setProfilePicture(res.data);
+        }
+      }
+    };
+    void getProfilePicture();
+  }, [user]);
+
   return (
-    <GlobalContextProvider user={user} setUser={setUser}>
+    <GlobalContextProvider
+      user={user}
+      setUser={setUser}
+      profilePicture={profilePicture}
+      setProfilePicture={setProfilePicture}
+      hideHeader={hideHeader}
+      setHideHeader={setHideHeader}
+    >
       <div
-        className={`${isDarkMode ? 'tw-dark' : ''} tw-min-w-screen tw-flex tw-min-h-screen tw-transform-gpu tw-flex-col tw-bg-white tw-bg-gradient-to-br tw-from-cyan-900/30 tw-via-purple-400/30 tw-to-blue-800/30 tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-from-violet-900/20 dark:tw-via-rose-900/20 dark:tw-to-purple-900/20 dark:tw-text-white`}
+        className={`${isDarkMode ? 'tw-dark' : ''} tw-min-w-screen tw-flex tw-min-h-screen tw-transform-gpu tw-flex-col tw-overflow-scroll tw-bg-gradient-to-br tw-from-cyan-300/20 tw-via-purple-500/20 tw-to-blue-500/20 tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-text-white`}
       >
         {isLoading && (
           <div className="tw-flex tw-h-[100vh] tw-items-center tw-justify-center">
@@ -59,7 +83,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
             <p className="tw-text-center">{t('cookies.message')}</p>
             <Button
               onClick={() => {
-                window.localStorage.setItem('acceptedCookies', acceptedCookies.toString());
+                window.localStorage.setItem('acceptedCookies', 'true');
                 setAcceptedCookies(true);
               }}
               invertedStyle
@@ -70,9 +94,9 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
         )}
         {!isLoading && acceptedCookies && (
           <>
-            <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+            {!hideHeader && <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />}
             <NotificationsProvider>
-              <div className="tw-xl:tw-w-[70vw] tw-mx-auto tw-min-h-[calc(100vh-113px)] tw-w-[calc(100%-32px)] tw-max-w-[2000px] tw-p-4">
+              <div className="tw-xl:tw-w-[70vw] tw-mx-auto tw-h-full tw-min-h-[calc(100vh-113px)] tw-w-[calc(100%-32px)] tw-max-w-[2000px] tw-p-4">
                 <Component {...pageProps} />
               </div>
             </NotificationsProvider>

@@ -47,6 +47,7 @@ const NotificationComponent: FunctionComponent<Notification> = ({ message, type,
           onClick={() => {
             setIsClosing(true);
           }}
+          draggable="false"
         />
       </div>
     </div>

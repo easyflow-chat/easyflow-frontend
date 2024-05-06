@@ -5,11 +5,13 @@ export const validationSchema = (
   t: TFunction,
 ): ObjectSchema<{
   email: string;
+  name: string;
   password: string;
   confirmPassword: string | undefined;
 }> => {
   return object().shape({
     email: string().email(t('signup:errors.invalidEmail')).required(t('signup:errors.notEmpty')),
+    name: string().required(t('signup:errors.notEmpty')),
     password: string()
       .min(8, t('signup:errors.short'))
       .matches(RegExp('[a-z]'), t('signup:errors.lowerCaseCharacter'))

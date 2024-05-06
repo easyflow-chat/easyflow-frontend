@@ -11,23 +11,33 @@ const SignUp: FunctionComponent = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const { isLoading, signup } = useUser();
   return (
-    <div className="tw-mt-16 tw-flex tw-flex-col tw-items-center">
+    <div className="tw-m-auto tw-mt-16 tw-flex tw-w-[calc(100%-32px)] tw-flex-col tw-items-center tw-rounded-lg tw-p-4 tw-backdrop-brightness-90 xl:tw-w-96">
       <Formik
-        initialValues={{ email: '', password: '', confirmPassword: '' }}
+        initialValues={{ email: '', name: '', password: '', confirmPassword: '' }}
         validationSchema={validationSchema(t)}
-        onSubmit={async values => setErrorMessage(await signup(values.email, values.password))}
+        onSubmit={async values => setErrorMessage(await signup(values.email, values.name, values.password))}
       >
         {({ errors, touched, values, isValid, setFieldTouched, setFieldValue }) => (
-          <Form>
-            <h2>{t('signup:signup')}</h2>
+          <Form className="tw-w-full">
+            <h2 className="tw-mt-0">{t('signup:signup')}</h2>
             <Input
               label={t('signup:email')}
               placeholder="example@example.com"
-              type="text"
+              type="email"
               value={values.email}
               errors={touched.email && errors.email ? errors.email : undefined}
               onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
               onBlur={() => setFieldTouched('email')}
+              required
+            />
+            <Input
+              label={t('signup:name.label')}
+              placeholder={t('signup:name.placeholder')}
+              type="text"
+              value={values.name}
+              errors={touched.name && errors.name ? errors.name : undefined}
+              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
+              onBlur={() => setFieldTouched('name')}
               required
             />
             <Input
@@ -49,9 +59,11 @@ const SignUp: FunctionComponent = () => {
               required
             />
             {errorMessage && <p className="tw-text-red-500">{errorMessage}</p>}
-            <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
-              Signup
-            </Button>
+            <div className="tw-ml-[-8px]">
+              <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
+                Signup
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

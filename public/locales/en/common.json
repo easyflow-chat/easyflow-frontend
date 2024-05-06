@@ -6,5 +6,16 @@
   },
   "errors": {
     "server": "An error occurred! Please try again later."
+  },
+  "header": {
+    "chat": "Chat",
+    "login": "Login",
+    "logout": "Logout",
+    "profile": "Profile",
+    "signup": "Signup"
+  },
+  "home": {
+    "title": "Available soon!",
+    "getStarted": "Get started"
   }
 }

@@ -12,7 +12,7 @@ type useUserType = {
   user: UserType | undefined;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<string | undefined>;
-  signup: (email: string, password: string) => Promise<string | undefined>;
+  signup: (email: string, name: string, password: string) => Promise<string | undefined>;
 };
 
 const useUser = (): useUserType => {
@@ -37,13 +37,13 @@ const useUser = (): useUserType => {
       } else {
         setUser(userRes.data);
         addSuccessNotification(t('login:success'));
-        await router.replace(`/chat/${userRes.data.id}`);
+        await router.replace('/chat');
       }
     }
   };
 
-  const signup = async (email: string, password: string): Promise<string | undefined> => {
-    const res = await fetchDataWithLoadingTimeout({ op: APIOperation.SIGNUP_USER, payload: { email, password } });
+  const signup = async (email: string, name: string, password: string): Promise<string | undefined> => {
+    const res = await fetchDataWithLoadingTimeout({ op: APIOperation.SIGNUP_USER, payload: { email, name, password } });
 
     if (!res.success) {
       if (res.errorCode === ErrorCodes.API_ERROR) {

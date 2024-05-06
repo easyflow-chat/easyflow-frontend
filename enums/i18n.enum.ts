@@ -3,4 +3,5 @@ export enum I18nNamespace {
   LOGIN = 'login',
   SIGNUP = 'signup',
   UNAUTHORIZED = 'unauthorized',
+  PROFILE = 'profile',
 }

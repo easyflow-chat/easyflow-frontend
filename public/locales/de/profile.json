@@ -1,0 +1,22 @@
+{
+  "profile": {
+    "title": "Profil",
+    "name": "Name",
+    "bio": "Biografie",
+    "modal": {
+      "title": "Profil bearbeiten",
+      "save": "Speichern",
+      "abort": "Abbrechen",
+      "errors": {
+        "required": "Dieses Feld ist erforderlich",
+        "maxLength1000": "Dieses Feld darf nicht länger als 1000 Zeichen sein",
+        "maxLength255": "Dieses Feld darf nicht länger als 255 Zeichen sein"
+      }
+    }
+  },
+  "profilePicture": {
+    "modalTitle": "Proilbild wechseln",
+    "save": "Speichern",
+    "reset": "Zurücksetzen"
+  }
+}

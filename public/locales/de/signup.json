@@ -11,6 +11,10 @@
     "passwordsNotEqual": "Passwörter stimmen nicht überein!",
     "emailExists": "E-Mail-Adresse existiert bereits!"
   },
+  "name": {
+    "label": "Name",
+    "placeholder": "Max Mustermann"
+  },
   "password": "Passwort",
   "signup": "Registrieren",
   "success": "Registrierung erfolgreich!"
