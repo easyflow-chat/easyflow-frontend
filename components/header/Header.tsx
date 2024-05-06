@@ -130,7 +130,7 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
               className="tw-relative tw-m-2 tw-mr-4 tw-flex tw-h-14 tw-w-14 tw-items-center tw-justify-center"
               ref={profileRef}
             >
-              <label className="tw-peer tw-flex tw-h-full tw-w-full">
+              <label className="tw-peer tw-flex tw-h-14 tw-w-14">
                 <input
                   type="checkbox"
                   className="tw-hidden"
@@ -139,13 +139,13 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                 />
                 {profilePicture ? (
                   <img
-                    className="tw-h-full tw-w-full tw-rounded-full tw-border-2 tw-border-solid tw-border-black dark:tw-border-white"
+                    className="tw-m-0 tw-h-14 tw-w-14 tw-rounded-full tw-border-2 tw-border-solid tw-border-black dark:tw-border-white"
                     src={`data:image;base64,${profilePicture}`}
                     alt="Profile"
                     draggable="false"
                   />
                 ) : (
-                  <div className="tw-h-full tw-w-full tw-rounded-full tw-border-2 tw-border-solid tw-border-black tw-bg-gradient-to-br tw-from-lime-400 tw-to-sky-400 dark:tw-border-white" />
+                  <div className="tw-m-0 tw-h-14 tw-w-14 tw-rounded-full tw-border-2 tw-border-solid tw-border-black tw-bg-gradient-to-br tw-from-lime-400 tw-to-sky-400 dark:tw-border-white" />
                 )}
               </label>
               <div className="tw-absolute tw-right-0 tw-top-20 tw-z-50 tw-m-3 tw-flex tw-h-fit tw-max-h-0 tw-w-fit tw-justify-end tw-overflow-hidden tw-rounded-2xl tw-bg-black/20 tw-backdrop-blur-lg tw-transition-max-height tw-duration-500 peer-has-[input:checked]:tw-max-h-screen">
