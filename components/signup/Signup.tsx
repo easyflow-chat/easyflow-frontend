@@ -61,7 +61,7 @@ const SignUp: FunctionComponent = () => {
             {errorMessage && <p className="tw-text-red-500">{errorMessage}</p>}
             <div className="tw-ml-[-8px]">
               <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
-                Signup
+                {t('signup:signup')}
               </Button>
             </div>
           </Form>
