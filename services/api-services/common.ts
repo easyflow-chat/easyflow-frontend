@@ -1,16 +1,20 @@
+import { UserType } from '../../types/user.type';
+
 enum APIOperation {
   SIGNUP_USER = 'post:user/signup',
   LOGIN = 'post:auth/login',
   GET_USER = 'get:user',
   GET_PROFILE_PICTURE = 'get:user/profile-picture',
   UPDATE_USER = 'put:user',
+  GET_CHAT_PREVIEW = 'get:chat/preview',
+  CREATE_CHAT = 'post:chat',
 }
 
 type APIContext = {
   [APIOperation.SIGNUP_USER]: RequestContext<
     APIOperation.SIGNUP_USER,
     CHAT_API.Responses.SignupResponse,
-    { email: string; name: string; password: string }
+    { email: string; name: string; password: string; publicKey: string; privateKey: string; iv: string; salt: string }
   >;
   [APIOperation.LOGIN]: RequestContext<
     APIOperation.LOGIN,
@@ -26,6 +30,21 @@ type APIContext = {
     APIOperation.UPDATE_USER,
     CHAT_API.Responses.UpdateUserResponse,
     { email?: string; profilePicture?: string; name?: string; bio?: string }
+  >;
+  [APIOperation.GET_CHAT_PREVIEW]: RequestContext<
+    APIOperation.GET_CHAT_PREVIEW,
+    CHAT_API.Responses.GetChatPreviewResponse
+  >;
+  [APIOperation.CREATE_CHAT]: RequestContext<
+    APIOperation.CREATE_CHAT,
+    CHAT_API.Responses.CreateChatResponse,
+    {
+      name: string;
+      description: string | undefined;
+      picture: string | undefined;
+      users: UserType['id'][];
+      userKeys: { key: string; userId: UserType['id'] }[];
+    }
   >;
 };
 

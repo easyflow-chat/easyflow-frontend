@@ -1,29 +1,41 @@
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { FunctionComponent, useContext, useEffect } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
+import ChatList from '../components/chat/ChatList';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
-import { GlobalContext } from '../context/gloabl.context';
 import { I18nNamespace } from '../enums/i18n.enum';
+import useChat from '../hooks/useChat';
+import useKeys from '../hooks/useKeys';
 import { APIOperation } from '../services/api-services/common';
 import { serverSideRequest } from '../services/api-services/server-side';
 import { UserType } from '../types/user.type';
 
 interface ChatType {
-  propUser?: UserType;
+  user: UserType;
 }
 
-const Chat: FunctionComponent<ChatType> = ({ propUser }): JSX.Element => {
-  const { setUser } = useContext(GlobalContext);
+const Chat: FunctionComponent<ChatType> = ({ user }): JSX.Element => {
+  const { getKeys } = useKeys();
+  const { getChatsPreview, chatsPreview } = useChat();
+
+  //eslint-disable-next-line
+  const [privateKey, setPrivateKey] = useState<CryptoKey>();
+  //eslint-disable-next-line
+  const [publicKey, setPublicKey] = useState<CryptoKey>();
 
   useEffect(() => {
-    if (propUser) {
-      setUser(propUser);
-    }
-  }, [propUser, setUser]);
+    const keys = async (): Promise<void> => {
+      const { privateKey, publicKey } = await getKeys();
+      setPrivateKey(privateKey);
+      setPublicKey(publicKey);
+    };
+    void keys();
+    void getChatsPreview();
+  }, []);
 
   return (
-    <div>
-      <h1>Chat</h1>
+    <div className="tw-h-[calc(100vh-113px)] tw-w-full tw-rounded-xl tw-shadow-lg tw-shadow-black/20 tw-backdrop-brightness-75">
+      <ChatList chats={chatsPreview} user={user} />
     </div>
   );
 };

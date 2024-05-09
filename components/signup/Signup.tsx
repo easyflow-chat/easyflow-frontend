@@ -26,7 +26,7 @@ const SignUp: FunctionComponent = () => {
               type="email"
               value={values.email}
               errors={touched.email && errors.email ? errors.email : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
               onBlur={() => setFieldTouched('email')}
               required
             />
@@ -36,7 +36,7 @@ const SignUp: FunctionComponent = () => {
               type="text"
               value={values.name}
               errors={touched.name && errors.name ? errors.name : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
               onBlur={() => setFieldTouched('name')}
               required
             />
@@ -45,7 +45,7 @@ const SignUp: FunctionComponent = () => {
               type="password"
               value={values.password}
               errors={touched.password && errors.password ? errors.password : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('password', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('password', e.currentTarget.value)}
               onBlur={() => setFieldTouched('password')}
               required
             />
@@ -54,7 +54,7 @@ const SignUp: FunctionComponent = () => {
               type="password"
               value={values.confirmPassword}
               errors={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('confirmPassword', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('confirmPassword', e.currentTarget.value)}
               onBlur={() => setFieldTouched('confirmPassword')}
               required
             />

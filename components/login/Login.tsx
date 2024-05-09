@@ -10,6 +10,7 @@ const Login: FunctionComponent = () => {
   const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState<string>();
   const { isLoading, login } = useUser();
+
   return (
     <div className="tw-m-auto tw-mt-16 tw-flex tw-w-[calc(100%-32px)] tw-flex-col tw-items-center tw-rounded-lg tw-p-4 tw-backdrop-brightness-90 xl:tw-w-96">
       <Formik
@@ -26,7 +27,7 @@ const Login: FunctionComponent = () => {
               type="email"
               value={values.email}
               errors={touched.email && errors.email ? errors.email : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
               onBlur={() => setFieldTouched('email')}
               required
             />
@@ -35,7 +36,7 @@ const Login: FunctionComponent = () => {
               type="password"
               value={values.password}
               errors={touched.password && errors.password ? errors.password : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('password', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('password', e.currentTarget.value)}
               onBlur={() => setFieldTouched('password')}
               required
             />

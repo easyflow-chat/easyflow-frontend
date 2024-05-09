@@ -54,7 +54,7 @@ const EditProfile = (): JSX.Element => {
                     label={t('profile:profile.name')}
                     type="text"
                     value={values.name}
-                    onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
                     onBlur={() => setFieldTouched('name')}
                     errors={touched.name && errors.name ? errors.name : undefined}
                     required
@@ -63,7 +63,7 @@ const EditProfile = (): JSX.Element => {
                     label={t('profile:profile.bio')}
                     maxLength={1000}
                     value={values.bio}
-                    onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                       setFieldValue('bio', e.currentTarget.value || null)
                     }
                     onBlur={() => setFieldTouched('bio')}

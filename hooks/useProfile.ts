@@ -23,7 +23,6 @@ const useProfile = (): {
       if (!res.success) {
         console.error('Error updating profile picture');
       } else {
-        console.log('Profile picture updated');
         setProfilePicture(base64Image);
         setUser(res.data);
       }
@@ -40,7 +39,6 @@ const useProfile = (): {
     if (!res.success) {
       console.error('Error updating user');
     } else {
-      console.log('User updated');
       setUser(res.data);
     }
   };
