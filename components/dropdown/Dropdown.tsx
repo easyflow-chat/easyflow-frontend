@@ -19,6 +19,7 @@ const Dropdown: FunctionComponent<DropdownProps> = ({ value, options, onChange }
       onChange(selected);
     }
     setIsOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   return (
