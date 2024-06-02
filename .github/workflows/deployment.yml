@@ -22,10 +22,12 @@ jobs:
       with:
         node-version:  $NODE_VERSION
         cache: 'npm'
-        registry-url: 'https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}'
+        registry-url: 'https://npm.pkg.github.com/'
         # Defaults to the user or organization that owns the workflow file
         scope: '@dragon437619'
     - run: npm ci
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: npm run build
 
   deploy:
