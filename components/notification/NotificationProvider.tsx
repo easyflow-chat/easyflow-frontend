@@ -39,7 +39,7 @@ const useNotifications = (): NotificationContextProps => {
   return useContext(NotificationcContext);
 };
 
-const NotificationsProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
+const NotificationsProvider: FunctionComponent<PropsWithChildren> = ({ children }): JSX.Element => {
   const [notifications, setNotifications] = useState<Omit<Notification, 'removeNotification'>[]>([]);
 
   useEffect(() => {
@@ -83,8 +83,8 @@ const NotificationsProvider: FunctionComponent<PropsWithChildren> = ({ children 
     <NotificationcContext.Provider
       value={{ setNotifications, notifications, addFailureNotification, addSuccessNotification, addMessageNotifcation }}
     >
-      <div className="tw-relative tw-h-full tw-w-full">
-        <div className="tw-absolute tw-bottom-[16px] tw-right-[16px]">
+      <div className="tw-relative tw-flex tw-h-full tw-w-full tw-justify-center">
+        <div className="tw-absolute tw-top-2">
           {notifications.map(notifcation => (
             <NotificationComponent
               key={notifcation.id}

@@ -4,7 +4,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FunctionComponent } from 'react';
-import Button from '../components/button/Button';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
 import { I18nNamespace } from '../enums/i18n.enum';
 import logo from '../public/images/logo.svg';
@@ -25,7 +24,7 @@ const Home: FunctionComponent = (): JSX.Element => {
         <p className="xl:tw-text[45px] tw-text-center tw-text-[30px] tw-font-semibold md:tw-text-[35px] lg:tw-text-[40px] 2xl:tw-text-[50px] 3xl:tw-text-[60px]">
           {t('home.title')}
         </p>
-        <Button onClick={() => router.push('/signup')}>{t('home.getStarted')}</Button>
+        <ewc-button onClick={() => router.push('/signup')} label={t('home.getStarted')} />
       </div>
     </div>
   );

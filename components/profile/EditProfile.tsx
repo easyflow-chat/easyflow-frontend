@@ -5,7 +5,6 @@ import { ChangeEvent, useContext, useRef } from 'react';
 import { GlobalContext } from '../../context/gloabl.context';
 import useProfile from '../../hooks/useProfile';
 import editPen from '../../public/images/edit-pen.svg';
-import Button from '../button/Button';
 import Input from '../input/Input';
 import Modal, { ModalRef } from '../modal/Modal';
 import ModalContent from '../modal/ModalContent';
@@ -54,7 +53,7 @@ const EditProfile = (): JSX.Element => {
                     label={t('profile:profile.name')}
                     type="text"
                     value={values.name}
-                    onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
                     onBlur={() => setFieldTouched('name')}
                     errors={touched.name && errors.name ? errors.name : undefined}
                     required
@@ -63,18 +62,25 @@ const EditProfile = (): JSX.Element => {
                     label={t('profile:profile.bio')}
                     maxLength={1000}
                     value={values.bio}
-                    onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                       setFieldValue('bio', e.currentTarget.value || null)
                     }
                     onBlur={() => setFieldTouched('bio')}
                     errors={touched.bio && errors.bio ? errors.bio : undefined}
                   />
-                  <div className="tw-flex tw-w-full tw-justify-center">
-                    <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
-                      {t('profile:profile.modal.save')}
-                    </Button>
-                    <Button onClick={() => modalRef.current?.close()}>{t('profile:profile.modal.abort')}</Button>
-                  </div>
+                  <ewc-button-group>
+                    <ewc-button
+                      type="submit"
+                      disabled={!isValid}
+                      loading={isLoading}
+                      label={t('profile:profile.modal.save')}
+                    />
+                    <ewc-button
+                      onClick={() => modalRef.current?.close()}
+                      label={t('profile:profile.modal.abort')}
+                      theme="secondary"
+                    />
+                  </ewc-button-group>
                 </Form>
               )}
             </Formik>

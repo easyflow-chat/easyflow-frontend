@@ -5,4 +5,8 @@ export type UserType = {
   email: string;
   name: string;
   bio?: string;
+  publicKey: string;
+  privateKey: string;
+  iv: string;
+  salt: string;
 };

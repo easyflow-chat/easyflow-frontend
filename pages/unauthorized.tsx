@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 import { FunctionComponent } from 'react';
-import Button from '../components/button/Button';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
 import { I18nNamespace } from '../enums/i18n.enum';
 
@@ -15,13 +14,15 @@ const Unauthorized: FunctionComponent = (): JSX.Element => {
       <div className="tw-text-center">
         <h1>{t('unauthorized:title')}</h1> {/* If possible replace with a ilustration */}
         <p>{t('unauthorized:message')}</p>
-        <div className="tw-flex tw-flex-col tw-items-center tw-justify-center md:tw-flex-row">
-          <Button onClick={() => router.replace('/login')}>{t('unauthorized:buttons.login')}</Button>
-          <Button onClick={() => router.replace('/signup')} invertedStyle>
-            {t('unauthorized:buttons.signup')}
-          </Button>
-          <Button onClick={() => router.replace('/')}>{t('unauthorized:buttons.home')}</Button>
-        </div>
+        <ewc-button-group>
+          <ewc-button onClick={() => router.replace('/login')} label={t('unauthorized:buttons.login')} />
+          <ewc-button
+            onClick={() => router.replace('/signup')}
+            theme="secondary"
+            label={t('unauthorized:buttons.signup')}
+          />
+          <ewc-button onClick={() => router.replace('/')} label={t('unauthorized:buttons.home')} />
+        </ewc-button-group>
       </div>
     </div>
   );

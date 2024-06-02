@@ -2,7 +2,6 @@ import { Form, Formik } from 'formik';
 import { useTranslation } from 'next-i18next';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import useUser from '../../hooks/useUser';
-import Button from '../button/Button';
 import Input from '../input/Input';
 import { validationSchema } from './validation-schema';
 
@@ -26,7 +25,7 @@ const SignUp: FunctionComponent = () => {
               type="email"
               value={values.email}
               errors={touched.email && errors.email ? errors.email : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('email', e.currentTarget.value)}
               onBlur={() => setFieldTouched('email')}
               required
             />
@@ -36,7 +35,7 @@ const SignUp: FunctionComponent = () => {
               type="text"
               value={values.name}
               errors={touched.name && errors.name ? errors.name : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('name', e.currentTarget.value)}
               onBlur={() => setFieldTouched('name')}
               required
             />
@@ -45,7 +44,7 @@ const SignUp: FunctionComponent = () => {
               type="password"
               value={values.password}
               errors={touched.password && errors.password ? errors.password : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('password', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('password', e.currentTarget.value)}
               onBlur={() => setFieldTouched('password')}
               required
             />
@@ -54,15 +53,13 @@ const SignUp: FunctionComponent = () => {
               type="password"
               value={values.confirmPassword}
               errors={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
-              onInput={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('confirmPassword', e.currentTarget.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFieldValue('confirmPassword', e.currentTarget.value)}
               onBlur={() => setFieldTouched('confirmPassword')}
               required
             />
             {errorMessage && <p className="tw-text-red-500">{errorMessage}</p>}
             <div className="tw-ml-[-8px]">
-              <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
-                {t('signup:signup')}
-              </Button>
+              <ewc-button type="submit" disabled={!isValid} loading={isLoading} label={t('signup:signup')} />
             </div>
           </Form>
         )}

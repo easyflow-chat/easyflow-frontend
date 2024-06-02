@@ -25,7 +25,6 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
     const msg = {
       request: {
         url: err.config?.url,
-        body: err.request.body,
       },
       status: err.response?.status,
       statusText: err.response?.statusText,
