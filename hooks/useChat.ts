@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { encrypt, extractKey } from '../helpers/key.helpers';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { APIOperation } from '../services/api-services/common';
+import { ChatPreviewType, ChatType } from '../types/chat.type';
 import { UserType } from '../types/user.type';
 import useFetch from './useFetch';
-import { ChatType } from '../types/chat.type';
 
 const useChat = (): {
   createChat: (
@@ -13,12 +12,19 @@ const useChat = (): {
     users: { id: UserType['id']; publicKey: UserType['publicKey'] }[],
   ) => Promise<void>;
   getChatsPreview: () => Promise<void>;
-  chatsPreview: Partial<ChatType>[];
+  getChatById: (chatId: string, privateKey: CryptoKey) => Promise<void>;
+  sendMessage: (content: string, chatId: string, iv: Uint8Array) => Promise<void>;
+  chat: ChatType | undefined;
+  chatKey: CryptoKey | undefined;
+  chatsPreviews: ChatPreviewType[];
   isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 } => {
-  const { fetchDataWithLoadingTimeout, isLoading } = useFetch();
+  const { fetchDataWithLoadingTimeout, isLoading, setIsLoading } = useFetch();
 
-  const [chatsPreview, setChatsPreview] = useState<Partial<ChatType>[]>([]);
+  const [chatsPreviews, setChatsPreviews] = useState<ChatPreviewType[]>([]);
+  const [chat, setChat] = useState<ChatType>();
+  const [chatKey, setChatKey] = useState<CryptoKey>();
 
   const createChat = async (
     name: string,
@@ -30,19 +36,18 @@ const useChat = (): {
       'encrypt',
       'decrypt',
     ]);
-    console.log(rawChatKey);
-    const chatKey = Buffer.from(await window.crypto.subtle.exportKey('raw', rawChatKey)).toString('base64');
-    console.log(chatKey);
     const userKeys = await Promise.all(
       users.map(async user => {
         const pubKey = await window.crypto.subtle.importKey(
           'spki',
-          Buffer.from(extractKey(user.publicKey), 'base64'),
-          { name: 'RSA-OAEP', hash: { name: 'SHA-256' } },
-          true,
-          ['encrypt'],
+          Buffer.from(user.publicKey, 'base64'),
+          { name: 'RSA-OAEP', hash: 'SHA-256' },
+          false,
+          ['wrapKey'],
         );
-        const encryptedChatKey = await encrypt(chatKey, pubKey);
+        const encryptedChatKey = Buffer.from(
+          await window.crypto.subtle.wrapKey('raw', rawChatKey, pubKey, { name: 'RSA-OAEP' }),
+        ).toString('base64');
         return { key: encryptedChatKey, userId: user.id };
       }),
     );
@@ -61,7 +66,16 @@ const useChat = (): {
     if (!res.success) {
       console.error(res.errorCode);
     } else {
-      console.log(res.data);
+      const preview: ChatPreviewType = {
+        id: res.data.id,
+        createdAt: res.data.createdAt,
+        updatedAt: res.data.updatedAt,
+        name: res.data.name,
+        description: res.data.description,
+        picture: res.data.picture,
+      };
+
+      setChatsPreviews([...chatsPreviews, preview]);
     }
   };
 
@@ -70,11 +84,56 @@ const useChat = (): {
     if (!res.success) {
       console.error(res.errorCode);
     } else {
-      setChatsPreview(res.data);
+      setChatsPreviews(res.data);
     }
   };
 
-  return { createChat, getChatsPreview, isLoading, chatsPreview };
+  const getChatById = async (chatId: string, privateKey: CryptoKey): Promise<void> => {
+    const res = await fetchDataWithLoadingTimeout({ op: APIOperation.GET_CHAT, params: { id: chatId } });
+    if (!res.success) {
+      console.error(res.errorCode);
+    } else {
+      setIsLoading(true);
+      const unwrapedChatKey = await window.crypto.subtle.unwrapKey(
+        'raw',
+        Buffer.from(res.data.userKeys[0].key, 'base64'),
+        privateKey,
+        { name: 'RSA-OAEP' },
+        { name: 'AES-GCM', length: 512 },
+        true,
+        ['encrypt', 'decrypt'],
+      );
+      setChatKey(unwrapedChatKey);
+      setChat(res.data);
+      setIsLoading(false);
+    }
+  };
+
+  const sendMessage = async (content: string, chatId: string, iv: Uint8Array): Promise<void> => {
+    const res = await fetchDataWithLoadingTimeout({
+      op: APIOperation.SEND_MESSAGE,
+      payload: { chatId, content, iv: Buffer.from(iv).toString('base64') },
+    });
+    if (!res.success) {
+      console.error(res.errorCode);
+    } else {
+      if (chat) {
+        setChat({ ...chat, messages: [res.data, ...chat.messages] });
+      }
+    }
+  };
+
+  return {
+    createChat,
+    getChatsPreview,
+    getChatById,
+    sendMessage,
+    chat,
+    chatKey,
+    isLoading,
+    setIsLoading,
+    chatsPreviews,
+  };
 };
 
 export default useChat;

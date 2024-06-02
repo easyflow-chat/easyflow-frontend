@@ -5,7 +5,6 @@ import { GlobalContext } from '../../context/gloabl.context';
 import useProfile from '../../hooks/useProfile';
 import editPen from '../../public/images/edit-pen.svg';
 import imageIcon from '../../public/images/image.svg';
-import Button from '../button/Button';
 import FileUpload from '../fileUpload/FileUpload';
 import Modal, { ModalRef } from '../modal/Modal';
 import ModalContent from '../modal/ModalContent';
@@ -63,23 +62,21 @@ const ChangeProfilePicture: FunctionComponent = () => {
                   setFile={setFile}
                 />
               )}
-              <div className="tw-flex">
+              <ewc-button-group>
                 {file && (
-                  <div className="tw-mx-2">
-                    <Button onClick={() => setFile(undefined)}>{t('profile:profilePicture.reset')}</Button>
-                  </div>
+                  <ewc-button
+                    onClick={() => setFile(undefined)}
+                    label={t('profile:profilePicture.reset')}
+                    theme="secondary"
+                  />
                 )}
-                <div className="tw-mx-2">
-                  <Button
-                    onClick={() => handleSubmitProfilePicture()}
-                    isLoading={isLoading}
-                    invertedStyle
-                    disabled={!file}
-                  >
-                    {t('profile:profilePicture.save')}
-                  </Button>
-                </div>
-              </div>
+                <ewc-button
+                  onClick={() => handleSubmitProfilePicture()}
+                  loading={isLoading}
+                  disabled={!file}
+                  label={t('profile:profilePicture.save')}
+                />
+              </ewc-button-group>
             </div>
           </ModalContent>
         </Modal>

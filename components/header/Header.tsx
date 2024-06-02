@@ -8,7 +8,6 @@ import NEXT_I18NEXT_CONFIG from '../../config/i18n.config';
 import { GlobalContext } from '../../context/gloabl.context';
 import useDetectOutsideClick from '../../hooks/useDetectOutsideClick';
 import logo from '../../public/images/logo.svg';
-import Button from '../button/Button';
 import Dropdown from '../dropdown/Dropdown';
 import Toggle from '../toggle/Toggle';
 
@@ -52,16 +51,10 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
             />
           </div>
           {!user && (
-            <>
-              <div className="tw-m-2">
-                <Button onClick={() => router.push('/login')}>{t('header.login')}</Button>
-              </div>
-              <div className="tw-m-2">
-                <Button onClick={() => router.push('/signup')} invertedStyle>
-                  {t('header.signup')}
-                </Button>
-              </div>
-            </>
+            <ewc-button-group>
+              <ewc-button onClick={() => router.push('/login')} theme="secondary" label={t('header.login')} />
+              <ewc-button onClick={() => router.push('/signup')} label={t('header.signup')} />
+            </ewc-button-group>
           )}
         </div>
         <div className="tw-mx-4 tw-ml-auto xl:tw-hidden" ref={hamburgerRef}>
@@ -79,29 +72,23 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
           <div className="tw-absolute tw-right-20 tw-top-20 tw-z-50 tw-m-3 tw-flex tw-h-fit tw-max-h-0 tw-w-fit tw-justify-end tw-overflow-hidden tw-rounded-2xl tw-bg-black/20 tw-backdrop-blur-lg tw-transition-max-height tw-duration-500 peer-has-[input:checked]/label:tw-max-h-screen">
             <div className="tw-m-8">
               {!user && (
-                <>
-                  <div className="tw-m-2">
-                    <Button
-                      onClick={async () => {
-                        setIsHamburgerOpen(false);
-                        await router.push('/signup');
-                      }}
-                      invertedStyle
-                    >
-                      {t('header.signup')}
-                    </Button>
-                  </div>
-                  <div className="tw-m-2">
-                    <Button
-                      onClick={async () => {
-                        setIsHamburgerOpen(false);
-                        await router.push('/login');
-                      }}
-                    >
-                      {t('header.login')}
-                    </Button>
-                  </div>
-                </>
+                <ewc-button-group>
+                  <ewc-button
+                    onClick={async () => {
+                      setIsHamburgerOpen(false);
+                      await router.push('/signup');
+                    }}
+                    label={t('header.signup')}
+                  />
+                  <ewc-button
+                    onClick={async () => {
+                      setIsHamburgerOpen(false);
+                      await router.push('/login');
+                    }}
+                    label={t('header.login')}
+                    theme="secondary"
+                  />
+                </ewc-button-group>
               )}
               <div className="tw-flex tw-items-center tw-justify-center">
                 <div className="tw-m-2">
@@ -159,17 +146,16 @@ const Header: FunctionComponent<HeaderProps> = ({ isDarkMode, setIsDarkMode }): 
                     </Link>
                   </div>
                   <div className="tw-mr-[-8px]">
-                    <Button
+                    <ewc-button
                       onClick={async () => {
                         setIsProfileOpen(false);
                         setUser(undefined);
                         deleteCookie('access_token', { path: '/' });
                         await router.push('/');
                       }}
-                      invertedStyle
-                    >
-                      {t('header.logout')}
-                    </Button>
+                      theme="secondary"
+                      label={t('header.logout')}
+                    />
                   </div>
                 </div>
               </div>

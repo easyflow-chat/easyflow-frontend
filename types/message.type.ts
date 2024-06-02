@@ -1,7 +1,10 @@
+import { UserType } from './user.type';
+
 export type MessageType = {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  sender: string;
+  sender: { id: UserType['id']; name: UserType['name'] };
   content: string;
+  iv: string;
 };

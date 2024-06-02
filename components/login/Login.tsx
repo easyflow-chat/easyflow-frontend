@@ -2,7 +2,6 @@ import { Form, Formik } from 'formik';
 import { useTranslation } from 'next-i18next';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import useUser from '../../hooks/useUser';
-import Button from '../button/Button';
 import Input from '../input/Input';
 import { validationSchema } from './validation-schema';
 
@@ -42,9 +41,7 @@ const Login: FunctionComponent = () => {
             />
             {errorMessage && <p className="tw-text-red-500">{errorMessage}</p>}
             <div className="tw-ml-[-8px]">
-              <Button type="submit" disabled={!isValid} isLoading={isLoading} invertedStyle>
-                {t('login:login')}
-              </Button>
+              <ewc-button type="submit" disabled={!isValid} loading={isLoading} label={t('login:login')} />
             </div>
           </Form>
         )}

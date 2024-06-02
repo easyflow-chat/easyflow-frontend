@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { ChangeEvent, Dispatch, FunctionComponent, SetStateAction, useRef } from 'react';
-import Button from '../button/Button';
 
 interface FileUploadProps {
   allowedFileTypes: string[];
@@ -45,7 +44,7 @@ const FileUpload: FunctionComponent<FileUploadProps> = ({ allowedFileTypes, icon
           })
           .join(', ')}
       </p>
-      <Button onClick={() => inputRef.current?.click()}>Upload</Button>
+      <ewc-button onClick={() => inputRef.current?.click()} label="Upload" />
     </div>
   );
 };

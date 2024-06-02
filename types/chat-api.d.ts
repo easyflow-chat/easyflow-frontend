@@ -1,5 +1,6 @@
 import { ErrorCodes } from '../enums/tc-api.enum';
-import { ChatType } from './chat.type';
+import { ChatPreviewType, ChatType } from './chat.type';
+import { MessageType } from './message.type';
 import { UserType } from './user.type';
 
 declare global {
@@ -15,7 +16,9 @@ declare global {
       type GetProfilePictureResponse = string;
       type UpdateUserResponse = UserType;
       type CreateChatResponse = ChatType;
-      type GetChatPreviewResponse = Omit<ChatType, ['keys', 'messages', 'users']>[];
+      type GetChatPreviewResponse = ChatPreviewType[];
+      type GetChatResponse = ChatType;
+      type SendMessageResponse = MessageType;
     }
   }
 }

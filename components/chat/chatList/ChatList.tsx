@@ -1,31 +1,36 @@
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'next-i18next';
-import { ChangeEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
-import useChat from '../../hooks/useChat';
-import imageIcon from '../../public/images/image.svg';
-import { ChatType } from '../../types/chat.type';
-import { UserType } from '../../types/user.type';
-import Button from '../button/Button';
-import FileUpload from '../fileUpload/FileUpload';
-import Input from '../input/Input';
-import Modal from '../modal/Modal';
-import ModalContent from '../modal/ModalContent';
-import ModalTrigger from '../modal/ModalTrigger';
-import Textarea from '../textarea/Textarea';
-import ChatListItem from './ChatListItem';
+import { ChangeEvent, Dispatch, FunctionComponent, SetStateAction, useEffect, useRef, useState } from 'react';
+import useChat from '../../../hooks/useChat';
+import imageIcon from '../../../public/images/image.svg';
+import { UserType } from '../../../types/user.type';
+import FileUpload from '../../fileUpload/FileUpload';
+import Input from '../../input/Input';
+import Modal, { ModalRef } from '../../modal/Modal';
+import ModalContent from '../../modal/ModalContent';
+import ModalTrigger from '../../modal/ModalTrigger';
+import Textarea from '../../textarea/Textarea';
+import ChatListItem from '../chatListItem/ChatListItem';
 import { validationSchema } from './validation-schema';
 
 interface ChatListProps {
-  chats: Partial<ChatType>[];
   user: UserType;
+  setSelectedChatId: Dispatch<SetStateAction<string | undefined>>;
+  selectedChatId?: string;
 }
 
-const ChatList: FunctionComponent<ChatListProps> = ({ chats, user }): JSX.Element => {
+const ChatList: FunctionComponent<ChatListProps> = ({ user, setSelectedChatId, selectedChatId }): JSX.Element => {
+  const modalRef = useRef<ModalRef>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { createChat } = useChat();
+  const { createChat, chatsPreviews, getChatsPreview } = useChat();
   const { t } = useTranslation();
 
   const [file, setFile] = useState<File>();
+
+  useEffect(() => {
+    void getChatsPreview();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const convertImage = async (): Promise<void> => {
@@ -38,12 +43,13 @@ const ChatList: FunctionComponent<ChatListProps> = ({ chats, user }): JSX.Elemen
     };
     void convertImage();
   }, [file]);
+
   return (
-    <div className="tw-relative tw-h-[calc(100%-2px)] tw-w-screen tw-max-w-[450px] tw-rounded-l-xl tw-border tw-border-solid tw-border-transparent tw-border-r-gray-300 dark:tw-border-r-gray-700">
+    <div className="tw-flex tw-h-full tw-flex-col tw-rounded-l-xl tw-border tw-border-solid tw-border-transparent tw-border-r-gray-300 dark:tw-border-r-gray-700">
       <div className="tw-sticky tw-top-0 tw-h-16 tw-w-full">
-        <Modal title="Create Chat">
+        <Modal ref={modalRef} title="Create Chat">
           <ModalTrigger>
-            <Button>New Chat</Button>
+            <ewc-button label="New Chat" />
           </ModalTrigger>
           <ModalContent>
             <div className="tw-flex tw-flex-col tw-items-center">
@@ -64,14 +70,15 @@ const ChatList: FunctionComponent<ChatListProps> = ({ chats, user }): JSX.Elemen
             </div>
             <Formik
               initialValues={{ name: '', description: undefined, users: [] }}
-              onSubmit={async values =>
+              onSubmit={async values => {
                 await createChat(
                   values.name,
                   values.description,
                   canvasRef.current?.toDataURL('image/jpeg').split(',')[1],
                   [...values.users, { id: user.id, publicKey: user.publicKey }],
-                )
-              }
+                );
+                modalRef.current?.close();
+              }}
               validationSchema={validationSchema(t)}
             >
               {({ values, touched, errors, setFieldValue, setFieldTouched }) => (
@@ -94,18 +101,21 @@ const ChatList: FunctionComponent<ChatListProps> = ({ chats, user }): JSX.Elemen
                     onBlur={() => setFieldTouched('description')}
                     errors={touched.description && errors.description ? errors.description : undefined}
                   />
-                  <Button type="submit" invertedStyle>
-                    Submit
-                  </Button>
+                  <ewc-button type="submit" label="Submit" />
                 </Form>
               )}
             </Formik>
           </ModalContent>
         </Modal>
       </div>
-      <div className="tw-h-[calc(100%-72px)] tw-w-full tw-overflow-scroll">
-        {chats.map((chat, i) => (
-          <ChatListItem chat={chat} key={`${chat}-${i}`} />
+      <div className="tw-h-[calc(100%-72px)] tw-w-full tw-overflow-y-auto">
+        {chatsPreviews.map((chatPreview, i) => (
+          <ChatListItem
+            chatPreview={chatPreview}
+            key={`${chatPreview}-${i}`}
+            setSelectedChat={setSelectedChatId}
+            selected={chatPreview.id === selectedChatId}
+          />
         ))}
       </div>
     </div>

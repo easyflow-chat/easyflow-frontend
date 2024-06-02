@@ -8,13 +8,15 @@ enum APIOperation {
   UPDATE_USER = 'put:user',
   GET_CHAT_PREVIEW = 'get:chat/preview',
   CREATE_CHAT = 'post:chat',
+  GET_CHAT = 'get:chat/{id}',
+  SEND_MESSAGE = 'post:chat/send-message',
 }
 
 type APIContext = {
   [APIOperation.SIGNUP_USER]: RequestContext<
     APIOperation.SIGNUP_USER,
     CHAT_API.Responses.SignupResponse,
-    { email: string; name: string; password: string; publicKey: string; privateKey: string; iv: string; salt: string }
+    { email: string; name: string; password: string; publicKey: string; privateKey: string; iv: string }
   >;
   [APIOperation.LOGIN]: RequestContext<
     APIOperation.LOGIN,
@@ -45,6 +47,17 @@ type APIContext = {
       users: UserType['id'][];
       userKeys: { key: string; userId: UserType['id'] }[];
     }
+  >;
+  [APIOperation.GET_CHAT]: RequestContext<
+    APIOperation.GET_CHAT,
+    CHAT_API.Responses.GetChatResponse,
+    void,
+    { id: string }
+  >;
+  [APIOperation.SEND_MESSAGE]: RequestContext<
+    APIOperation.SEND_MESSAGE,
+    CHAT_API.Responses.SendMessageResponse,
+    { content: string; chatId: string; iv: string }
   >;
 };
 

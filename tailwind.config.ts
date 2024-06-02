@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  safelist: ['tw-dark', 'tw-h-fit', ...[...Array(100).keys()].flatMap(i => [`tw-h-${i}`, `tw-w-${i}`])],
+  safelist: ['tw-dark', 'tw-h-fit'],
   darkMode: ['selector'],
   corePlugins: {
     preflight: false,
@@ -11,6 +11,19 @@ const config: Config = {
       animation: {
         dash: 'dash 1.5s ease-in-out infinite',
         'modal-open': 'modal-open 0.5s ease-in-out',
+      },
+      colors: {
+        'ewc-black': 'var(--ewc-black)',
+        'ewc-rich-black': 'var(--ewc-rich-black)',
+        'ewc-oxford-blue': 'var(--ewc-oxford-blue)',
+        'ewc-charcoal': 'var(--ewc-charcoal)',
+        'ewc-lavender-tint-1': 'var(--ewc-lavender-tint-1)',
+        'ewc-lavender-tint-2': 'var(--ewc-lavender-tint-2)',
+        'ewc-lavender-tint-3': 'var(--ewc-lavender-tint-3)',
+        'ewc-pale-purple': 'var(--ewc-pale-purple)',
+        'ewc-rose-quartz': 'var(--ewc-rose-quartz)',
+        'ewc-mountbatten-pink': 'var(--ewc-mountbatten-pink)',
+        'ewc-gray': 'var(--ewc-gray)',
       },
       screens: {
         '3xl': '1800px',

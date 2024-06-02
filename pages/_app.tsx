@@ -1,9 +1,9 @@
+import '@dragon437619/easyflow-web-components/dist/css/styles.css';
+import { defineCustomElements } from '@dragon437619/easyflow-web-components/loader';
 import { appWithTranslation, useTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { FunctionComponent, useEffect, useState } from 'react';
-import Button from '../components/button/Button';
 import Header from '../components/header/Header';
-import LoadingSpinner from '../components/loadingSpinner/LoadingSpinner';
 import NotificationsProvider from '../components/notification/NotificationProvider';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
 import GlobalContextProvider from '../context/gloabl.context';
@@ -24,6 +24,10 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
   const { t } = useTranslation(I18nNamespace.COMMON);
 
   useEffect(() => {
+    defineCustomElements(window);
+  }, []);
+
+  useEffect(() => {
     const darkMode = window.localStorage.getItem('darkMode');
     if (darkMode) {
       setIsDarkMode(darkMode === 'true' ? true : false);
@@ -39,6 +43,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
     void reqUser();
 
     setAcceptedCookies(window.localStorage.getItem('acceptedCookies') === 'true' ? true : false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -59,6 +64,7 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
       }
     };
     void getProfilePicture();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
@@ -71,26 +77,24 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
       setHideHeader={setHideHeader}
     >
       <div
-        className={`${isDarkMode ? 'tw-dark' : ''} tw-min-w-screen tw-flex tw-min-h-screen tw-transform-gpu tw-flex-col tw-overflow-scroll tw-overflow-x-hidden tw-bg-gradient-to-br tw-from-cyan-300/20 tw-via-purple-500/20 tw-to-blue-500/20 tw-font-rubik tw-text-black tw-transition-colors tw-duration-200 dark:tw-bg-black dark:tw-text-white`}
+        className={`${isDarkMode ? 'ewc--dark tw-dark' : 'ewc--light'} tw-min-w-screen tw-flex tw-min-h-screen tw-transform-gpu tw-flex-col tw-overflow-auto tw-overflow-x-hidden tw-bg-ewc-lavender-tint-1 tw-font-rubik tw-text-ewc-black tw-transition-colors tw-duration-200 dark:tw-bg-ewc-black dark:tw-text-ewc-lavender-tint-2`}
       >
         {isLoading && (
           <div className="tw-flex tw-h-[100vh] tw-items-center tw-justify-center">
-            <LoadingSpinner size="16" />
+            <ewc-loader size={50} strokeInherit />
           </div>
         )}
         {!acceptedCookies && !isLoading && (
           <div className="tw-flex tw-h-[100vh] tw-flex-col tw-items-center tw-justify-center">
             <h2>{t('cookies.title')}</h2>
             <p className="tw-text-center">{t('cookies.message')}</p>
-            <Button
+            <ewc-button
               onClick={() => {
                 window.localStorage.setItem('acceptedCookies', 'true');
                 setAcceptedCookies(true);
               }}
-              invertedStyle
-            >
-              {t('cookies.acknowledge')}
-            </Button>
+              label={t('cookies.acknowledge')}
+            />
           </div>
         )}
         {!isLoading && acceptedCookies && (

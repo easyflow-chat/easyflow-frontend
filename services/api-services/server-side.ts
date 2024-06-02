@@ -58,7 +58,6 @@ const req = async <T extends APIOperation, R = APIContext[T]['responseType']>(
           ...headers,
           cookie: cookies,
         },
-
         withCredentials: true,
       });
     }

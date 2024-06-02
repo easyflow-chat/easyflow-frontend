@@ -10,5 +10,7 @@ export type ChatType = {
   picture?: string;
   users: UserType[];
   messages: MessageType[];
-  keys: { key: string; userId: string }[];
+  userKeys: { key: string; userId: string }[];
 };
+
+export type ChatPreviewType = Omit<ChatType, 'userKeys' | 'messages' | 'users'>;
