@@ -35,7 +35,7 @@ jobs:
       run: rm -rf node_modules
 
     - name: Install prod packages
-      run: npm ci --omit=dev
+      run: npm ci --omit=dev --omit=optional
 
     - name: Install Railway CLI
       run: npm install -g @railway/cli

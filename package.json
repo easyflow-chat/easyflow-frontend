@@ -11,8 +11,7 @@
     "start": "NODE_ENV=production node dist/server/index.js",
     "lint": "next lint",
     "precommit": "npm run prettify && lint-staged --no-stash",
-    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
-    "prepare": "husky"
+    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
   },
   "dependencies": {
     "@dragon437619/easyflow-web-components": "0.0.10-alpha",
