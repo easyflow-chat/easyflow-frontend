@@ -6,24 +6,27 @@ on:
   push:
     branches: [ main ]
 
+env:
+  NODE_VERSION: 20.x
+
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js $NODE_VERSION
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: $NODE_VERSION
         cache: 'npm'
+        registry-url: https://pkg.npm.github.com
+        scope: '@dragon437619'
     - run: npm ci
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: npm run build
 
   deploy:
@@ -32,10 +35,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 20.x
+      - name: Use Node.js $NODE_VERSION
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x
+          node-version: $NODE_VERSION
           cache: 'npm'
       - name: Install Railway CLI
         run: npm install -g @railway/cli
