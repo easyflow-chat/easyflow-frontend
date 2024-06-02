@@ -46,6 +46,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - name: Remove packages
+        run: rm -rf node_modules
+      - name: Install prod packages
+        run: npm ci --omit=dev
       - name: Install Railway CLI
         run: npm install -g @railway/cli
       - name: Deploys to Railway
