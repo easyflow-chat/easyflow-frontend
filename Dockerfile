@@ -11,8 +11,9 @@ RUN chown -R appuser:appgroup /app
 
 WORKDIR /app
 COPY --chown=appuser:appgroup ./dist /app/dist
+COPY --chown=appuser:appgroup ./.next /.next
+COPY --chown=appuser:appgroup ./public /app/public
 COPY --chown=appuser:appgroup ./node_modules /app/node_modules
-COPY --chown=appuse:appgroup ./prisma ./prisma
 COPY --chown=appuser:appgroup ./entrypoint.sh /app/entrypoint.sh
 
 USER appuser
