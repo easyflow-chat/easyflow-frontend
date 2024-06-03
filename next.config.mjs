@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-import i18n from './next-18next.config.mjs';
+import i18n from './next-i18next.config.mjs';
 
 // https://securityheaders.com
 const ContentSecurityPolicy = `
