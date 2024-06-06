@@ -21,6 +21,7 @@ const bootstrap = async (): Promise<void> => {
   // Start the server
   server.listen(port, () => {
     console.log('Server Ready');
+    console.log(`Listening on port: ${port}`);
   });
 };
 

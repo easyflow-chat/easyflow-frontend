@@ -1,1 +1,2 @@
-NODE_ENV=production node ./dist/src/main.js
+#!/bin/sh
+NODE_ENV=production node dist/server/index.js
