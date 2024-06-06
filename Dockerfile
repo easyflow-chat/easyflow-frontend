@@ -43,7 +43,6 @@ COPY --chown=appuser:appgroup ./postcss.config.json /app/postcss.config.json
 COPY --chown=appuser:appgroup ./tailwind.config.ts /app/tailwind.config.ts
 COPY --chown=appuser:appgroup ./tsconfig.json /app/tsconfig.json
 COPY --chown=appuser:appgroup ./tsconfig.build.json /app/tsconfig.build.json
-COPY --chown=appuser:appgroup ./.env /app/.env
 
 
 #Add node auth token to the npmrc
