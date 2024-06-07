@@ -17,7 +17,7 @@ WORKDIR /app
 FROM base as dependencies
 
 # Copy package files and install dependencies
-COPY --chown=appuser:appgroup ./ /app/
+COPY --chown=appuser:appgroup . .
 ARG NODE_AUTH_TOKEN
 RUN echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc && \
     npm ci && \
