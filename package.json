@@ -14,7 +14,7 @@
     "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
   },
   "dependencies": {
-    "@dragon437619/easyflow-web-components": "0.0.10-alpha",
+    "@easyflow-chat/easyflow-web-components": "0.0.12-alpha",
     "@types/node": "20.13.0",
     "autoprefixer": "10.4.19",
     "axios": "1.7.2",
