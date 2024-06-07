@@ -3,6 +3,7 @@ import { defineCustomElements } from '@easyflow-chat/easyflow-web-components/loa
 import { appWithTranslation, useTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { FunctionComponent, useEffect, useState } from 'react';
+import { Socket, io } from 'socket.io-client';
 import Header from '../components/header/Header';
 import NotificationsProvider from '../components/notification/NotificationProvider';
 import NEXT_I18NEXT_CONFIG from '../config/i18n.config';
@@ -19,12 +20,36 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
   const [user, setUser] = useState<UserType>();
   const [acceptedCookies, setAcceptedCookies] = useState<boolean>(true);
   const [hideHeader, setHideHeader] = useState<boolean>(false);
+  const [webSocket, setWebSocket] = useState<Socket>();
 
   const { isLoading, fetchDataWithLoadingTimeout } = useFetch();
   const { t } = useTranslation(I18nNamespace.COMMON);
 
   useEffect(() => {
     defineCustomElements(window);
+
+    const webSocket = io(
+      process.env.NODE_ENV === 'production' ? 'https://backend.easyflow.chat/' : 'http://localhost:4000/',
+      {
+        withCredentials: true,
+      },
+    );
+    setWebSocket(webSocket);
+
+    // Handle connection open
+    webSocket.on('connect', () => {
+      console.log(`Connected to ${webSocket.id}`);
+    });
+
+    // Handle disconnect
+    webSocket.on('disconnect', () => {
+      console.log('Disconnected');
+    });
+
+    // Cleanup
+    return () => {
+      webSocket.close();
+    };
   }, []);
 
   useEffect(() => {
@@ -75,6 +100,8 @@ const App: FunctionComponent<AppProps & { viewport: string }> = ({ Component, pa
       setProfilePicture={setProfilePicture}
       hideHeader={hideHeader}
       setHideHeader={setHideHeader}
+      webSocket={webSocket}
+      setWebSocket={setWebSocket}
     >
       <div
         className={`${isDarkMode ? 'ewc--dark tw-dark' : 'ewc--light'} tw-min-w-screen tw-flex tw-min-h-screen tw-transform-gpu tw-flex-col tw-overflow-auto tw-overflow-x-hidden tw-bg-ewc-lavender-tint-1 tw-font-rubik tw-text-ewc-black tw-transition-colors tw-duration-200 dark:tw-bg-ewc-black dark:tw-text-ewc-lavender-tint-2`}

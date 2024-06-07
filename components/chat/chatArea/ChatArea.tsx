@@ -11,8 +11,8 @@ interface ChatAreaProps {
 }
 
 const ChatArea: FunctionComponent<ChatAreaProps> = ({ selectedChatId, privateKey }): JSX.Element => {
-  const { getChatById, sendMessage, isLoading, chatKey, chat } = useChat();
-  const { user } = useContext(GlobalContext);
+  const { getChatById, sendMessage, isLoading, chatKey, chat, setChat } = useChat();
+  const { user, webSocket } = useContext(GlobalContext);
   const [decryptedMessages, setDecryptedMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>();
   const [isTooLong, setIsTooLong] = useState<boolean>();
@@ -24,6 +24,19 @@ const ChatArea: FunctionComponent<ChatAreaProps> = ({ selectedChatId, privateKey
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChatId, privateKey]);
+
+  useEffect(() => {
+    // Handle incoming messages
+    webSocket?.on('receive_message', async (data: MessageType) => {
+      if (chat && chatKey) {
+        console.log('Received message', data);
+        setChat({
+          ...chat,
+          messages: [data, ...chat.messages],
+        });
+      }
+    });
+  }, [chat, chatKey, setChat, webSocket]);
 
   useEffect(() => {
     const decryptMessages = async (): Promise<void> => {
