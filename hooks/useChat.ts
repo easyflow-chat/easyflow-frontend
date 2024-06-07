@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Socket, io } from 'socket.io-client';
 import { APIOperation } from '../services/api-services/common';
 import { ChatPreviewType, ChatType } from '../types/chat.type';
 import { UserType } from '../types/user.type';
@@ -25,6 +26,20 @@ const useChat = (): {
   const [chatsPreviews, setChatsPreviews] = useState<ChatPreviewType[]>([]);
   const [chat, setChat] = useState<ChatType>();
   const [chatKey, setChatKey] = useState<CryptoKey>();
+  const [ws, setWs] = useState<Socket>();
+
+  useEffect(() => {
+    const webSocket = io('localhost:4000');
+    setWs(webSocket);
+
+    webSocket.on('connect', () => {
+      console.log(`Connected with id: ${webSocket.id}`);
+    });
+
+    webSocket.on('disconnect', () => {
+      console.log('Disconnected');
+    });
+  }, []);
 
   const createChat = async (
     name: string,
@@ -110,17 +125,15 @@ const useChat = (): {
   };
 
   const sendMessage = async (content: string, chatId: string, iv: Uint8Array): Promise<void> => {
-    const res = await fetchDataWithLoadingTimeout({
-      op: APIOperation.SEND_MESSAGE,
-      payload: { chatId, content, iv: Buffer.from(iv).toString('base64') },
-    });
-    if (!res.success) {
-      console.error(res.errorCode);
-    } else {
-      if (chat) {
-        setChat({ ...chat, messages: [res.data, ...chat.messages] });
-      }
-    }
+    const req = {
+      event: 'send_message',
+      data: {
+        content,
+        chatId,
+        iv,
+      },
+    };
+    ws?.emit(JSON.stringify(req));
   };
 
   return {
