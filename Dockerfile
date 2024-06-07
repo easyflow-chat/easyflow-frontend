@@ -27,7 +27,7 @@ RUN echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc && \
 FROM dependencies as build
 
 # Copy the rest of the application files
-COPY --chown=appuser:appgroup . .
+COPY --chown=appuser:appgroup --from=dependencies . .
 
 # Lint and build the application
 RUN npm run lint && npm run build
