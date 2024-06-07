@@ -38,6 +38,7 @@ FROM base as production
 # Copy necessary files and folders from the build stage
 COPY --chown=appuser:appgroup --from=build /app/public /app/public
 COPY --chown=appuser:appgroup --from=build /app/.next /app/.next
+COPY --chown=appuser:appgroup --from=build /app/dist /app/dist
 COPY --chown=appuser:appgroup --from=build /app/package*.json ./
 COPY --chown=appuser:appgroup --from=build /app/entrypoint.sh ./entrypoint.sh
 COPY --chown=appuser:appgroup --from=build /app/next-i18next.config.mjs ./next-i18next.config.mjs
