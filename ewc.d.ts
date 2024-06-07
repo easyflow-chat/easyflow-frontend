@@ -1,4 +1,4 @@
-import { JSX } from '@dragon437619/easyflow-web-components/loader';
+import { JSX } from '@easyflow-chat/easyflow-web-components/loader';
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 type StencilProps<T> = {

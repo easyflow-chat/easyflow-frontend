@@ -80,7 +80,6 @@ RUN rm -r /app/.prettierrc
 RUN rm -r /app/ewc.d.ts
 RUN rm -r /app/middleware.ts
 RUN rm -r /app/package-lock.json
-RUN rm -r /app/package.json
 RUN rm -r /app/postcss.config.json
 RUN rm -r /app/tailwind.config.ts
 RUN rm -r /app/tsconfig.json

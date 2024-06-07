@@ -1,5 +1,5 @@
-import '@dragon437619/easyflow-web-components/dist/css/styles.css';
-import { defineCustomElements } from '@dragon437619/easyflow-web-components/loader';
+import '@easyflow-chat/easyflow-web-components/dist/css/styles.css';
+import { defineCustomElements } from '@easyflow-chat/easyflow-web-components/loader';
 import { appWithTranslation, useTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { FunctionComponent, useEffect, useState } from 'react';
