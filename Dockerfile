@@ -64,26 +64,26 @@ RUN rm -rf node_modules
 RUN npm ci --omit=dev --omit=optional
 
 #Remove unneeded files
-RUN rm -r /app/components
-RUN rm -r /app/config
-RUN rm -r /app/context
-RUN rm -r /app/enums
-RUN rm -r /app/helpers
-RUN rm -r /app/hooks
-RUN rm -r /app/pages
-RUN rm -r /app/server
-RUN rm -r /app/services
-RUN rm -r /app/styles
-RUN rm -r /app/types
-RUN rm -r /app/.eslintrc.json
-RUN rm -r /app/.prettierrc
-RUN rm -r /app/ewc.d.ts
-RUN rm -r /app/middleware.ts
-RUN rm -r /app/package-lock.json
-RUN rm -r /app/postcss.config.json
-RUN rm -r /app/tailwind.config.ts
-RUN rm -r /app/tsconfig.json
-RUN rm -r /app/tsconfig.build.json
+RUN rm -r ./components
+RUN rm -r ./config
+RUN rm -r ./context
+RUN rm -r ./enums
+RUN rm -r ./helpers
+RUN rm -r ./hooks
+RUN rm -r ./pages
+RUN rm -r ./server
+RUN rm -r ./services
+RUN rm -r ./styles
+RUN rm -r ./types
+RUN rm -r ./.eslintrc.json
+RUN rm -r ./.prettierrc
+RUN rm -r ./ewc.d.ts
+RUN rm -r ./middleware.ts
+RUN rm -r ./package-lock.json
+RUN rm -r ./postcss.config.json
+RUN rm -r ./tailwind.config.ts
+RUN rm -r ./tsconfig.json
+RUN rm -r ./tsconfig.build.json
 RUN rm -r ~/.npmrc
 
 #Uninstall npm not needed anymore
