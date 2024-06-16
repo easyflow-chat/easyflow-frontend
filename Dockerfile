@@ -1,49 +1,11 @@
-FROM node:20-alpine as base
-
-#Variables
+FROM node:20-alpine as builder
+# Variables
 ARG NODE_AUTH_TOKEN
-
-
-RUN npm uninstall -g yarn
-
-RUN addgroup -g 2000 -S appgroup
-RUN adduser -DH -s /sbin/nologin -u 2000 -G appgroup -S appuser
-
-RUN mkdir /app
-RUN chown -R appuser:appgroup /app
-
 
 WORKDIR /app
 
-#Is needed afterwards
-COPY --chown=appuser:appgroup ./entrypoint.sh /app/entrypoint.sh
-COPY --chown=appuser:appgroup ./public /app/public
-COPY --chown=appuser:appgroup ./next-i18next.config.mjs /app/next-i18next.config.mjs
-COPY --chown=appuser:appgroup ./next.config.mjs /app/next.config.mjs
-
-#Gets deleted afterwards
-COPY --chown=appuser:appgroup ./components /app/components
-COPY --chown=appuser:appgroup ./config /app/config
-COPY --chown=appuser:appgroup ./context /app/context
-COPY --chown=appuser:appgroup ./enums /app/enums
-COPY --chown=appuser:appgroup ./helpers /app/helpers
-COPY --chown=appuser:appgroup ./hooks /app/hooks
-COPY --chown=appuser:appgroup ./pages /app/pages
-COPY --chown=appuser:appgroup ./server /app/server
-COPY --chown=appuser:appgroup ./services /app/services
-COPY --chown=appuser:appgroup ./styles /app/styles
-COPY --chown=appuser:appgroup ./types /app/types
-COPY --chown=appuser:appgroup ./.eslintrc.json /app/.eslintrc.json
-COPY --chown=appuser:appgroup ./.prettierrc /app/.prettierrc
-COPY --chown=appuser:appgroup ./ewc.d.ts /app/ewc.d.ts
-COPY --chown=appuser:appgroup ./middleware.ts /app/middleware.ts
-COPY --chown=appuser:appgroup ./package-lock.json /app/package-lock.json
-COPY --chown=appuser:appgroup ./package.json /app/package.json
-COPY --chown=appuser:appgroup ./postcss.config.json /app/postcss.config.json
-COPY --chown=appuser:appgroup ./tailwind.config.ts /app/tailwind.config.ts
-COPY --chown=appuser:appgroup ./tsconfig.json /app/tsconfig.json
-COPY --chown=appuser:appgroup ./tsconfig.build.json /app/tsconfig.build.json
-
+#Copy everything
+COPY . .
 
 #Add node auth token to the npmrc
 RUN echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
@@ -63,32 +25,37 @@ RUN rm -rf node_modules
 #Install prod packages
 RUN npm ci --omit=dev --omit=optional
 
-#Remove unneeded files
-RUN rm -r ./components
-RUN rm -r ./config
-RUN rm -r ./context
-RUN rm -r ./enums
-RUN rm -r ./helpers
-RUN rm -r ./hooks
-RUN rm -r ./pages
-RUN rm -r ./server
-RUN rm -r ./services
-RUN rm -r ./styles
-RUN rm -r ./types
-RUN rm -r ./.eslintrc.json
-RUN rm -r ./.prettierrc
-RUN rm -r ./ewc.d.ts
-RUN rm -r ./middleware.ts
-RUN rm -r ./package-lock.json
-RUN rm -r ./postcss.config.json
-RUN rm -r ./tailwind.config.ts
-RUN rm -r ./tsconfig.json
-RUN rm -r ./tsconfig.build.json
-RUN rm -r ~/.npmrc
+FROM node:20-alpine as production
 
-#Uninstall npm not needed anymore
+# Uninstall yarn and npm not needed in prod
+RUN npm uninstall -g yarn
 RUN npm uninstall -g npm
 
+RUN addgroup -g 2000 -S appgroup
+RUN adduser -DH -s /sbin/nologin -u 2000 -G appgroup -S appuser
+
+
+WORKDIR /app
+
+#Copy needed files
+COPY --chown=appuser:appgroup --from=builder /app/.next /app/.next
+COPY --chown=appuser:appgroup --from=builder /app/dist /app/dist
+COPY --chown=appuser:appgroup --from=builder /app/node_modules /app/node_modules
+COPY --chown=appuser:appgroup --from=builder /app/public /app/public
+COPY --chown=appuser:appgroup --from=builder /app/entrypoint.sh /app/entrypoint.sh
+COPY --chown=appuser:appgroup --from=builder /app/next-i18next.config.mjs /app/next-i18next.config.mjs
+COPY --chown=appuser:appgroup --from=builder /app/next.config.mjs /app/next.config.mjs
+COPY --chown=appuser:appgroup --from=builder /app/nginx.conf /etc/nginx/nginx.conf
+
+# Set type module
+RUN echo '{"type": "module"}' > /app/package.json
+
+# add nginx
+RUN apk add nginx
+
+# Create the necessary directories with correct permissions
+RUN mkdir -p /var/ /run/ && \
+    chown -R appuser:appgroup /var/ /run/
 
 USER appuser
 
@@ -101,4 +68,4 @@ ENV APPLICATION_ROOT="/app"
 ENV NODE_ENV="production"
 
 RUN chmod +x ./entrypoint.sh
-ENTRYPOINT ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
