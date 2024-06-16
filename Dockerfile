@@ -56,10 +56,9 @@ COPY --chown=appuser:appgroup --from=builder /app/nginx.conf /etc/nginx/nginx.co
 RUN echo '{"type": "module"}' > /app/package.json
 
 # Create certificates
-RUN mkdir -p /etc/ssl/
-RUN chown -R appuser:appgroup /etc/ssl/
 RUN echo "${CLOUDFLARE_ORIGIN_CERTIFICATE}" > /etc/ssl/easyflow.pem
 RUN echo "${CLOUDFLARE_ORIGIN_CA_KEY}" > /etc/ssl/easyflow.key
+RUN chown -R appuser:appgroup /etc/ssl/
 
 # add nginx
 RUN apk add nginx
