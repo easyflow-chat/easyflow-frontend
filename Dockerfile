@@ -1,10 +1,7 @@
+FROM node:20-alpine as builder
 
 # Variables
 ARG NODE_AUTH_TOKEN
-ARG CLOUDFLARE_ORIGIN_CERTIFICATE
-ARG CLOUDFLARE_ORIGIN_CA_KEY
-
-FROM node:20-alpine as builder
 
 WORKDIR /app
 
@@ -30,6 +27,10 @@ RUN rm -rf node_modules
 RUN npm ci --omit=dev --omit=optional
 
 FROM node:20-alpine as production
+
+# Variables
+ARG CLOUDFLARE_ORIGIN_CERTIFICATE
+ARG CLOUDFLARE_ORIGIN_CA_KEY
 
 # Uninstall yarn and npm not needed in prod
 RUN npm uninstall -g yarn
