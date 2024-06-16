@@ -1,6 +1,10 @@
-FROM node:20-alpine as builder
+
 # Variables
 ARG NODE_AUTH_TOKEN
+ARG CLOUDFLARE_ORIGIN_CERTIFICATE
+ARG CLOUDFLARE_ORIGIN_CA_KEY
+
+FROM node:20-alpine as builder
 
 WORKDIR /app
 
@@ -49,6 +53,11 @@ COPY --chown=appuser:appgroup --from=builder /app/nginx.conf /etc/nginx/nginx.co
 
 # Set type module
 RUN echo '{"type": "module"}' > /app/package.json
+
+# Create certificates
+RUN echo "${CLOUDFLARE_ORIGIN_CERTIFICATE}" > /etc/ssl/easyflow.pem
+RUN echo "${CLOUDFLARE_ORIGIN_CA_KEY}" > /etc/ssl/easyflow.key
+RUN chown -R appuser:appgroup /etc/ssl/
 
 # add nginx
 RUN apk add nginx
