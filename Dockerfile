@@ -64,8 +64,8 @@ RUN chown -R appuser:appgroup /etc/ssl/
 RUN apk add nginx
 
 # Create the necessary directories with correct permissions
-RUN mkdir -p /var/ /run/ && \
-    chown -R appuser:appgroup /var/ /run/
+RUN mkdir -p /var/ /run/ /logs/ && \
+    chown -R appuser:appgroup /var/ /run/ /logs/
 
 USER appuser
 
